@@ -1,0 +1,34 @@
+{
+  "name": "hell-pizza-api",
+  "version": "1.0.0",
+  "description": "NodeJS API Wrapper for Hell Pizza NZ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johnnyrainbow/hell-pizza-node-api.git"
+  },
+  "keywords": [
+    "hell",
+    "hells",
+    "pizza",
+    "node",
+    "nodejs",
+    "api",
+    "new",
+    "zealand",
+    "nz"
+  ],
+  "author": "Gabriel Kennedy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johnnyrainbow/hell-pizza-node-api/issues"
+  },
+  "homepage": "https://github.com/johnnyrainbow/hell-pizza-node-api#readme",
+  "dependencies": {
+    "request": "^2.88.0"
+  }
+}

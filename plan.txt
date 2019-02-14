@@ -1,0 +1,19 @@
+API:
+
+Wrapper 
+
+GET /stores - gets list of all stores in nz,
+GET /stores/near gets list of all stores near you
+GET /stores/closest gets closest store near you
+GET /menu
+POST /place_order - {{CARD DETAILS..} TYPE: "PICKUP/DELIVERY", STORE: STRING} 
+places an order with hell pizza api, returns the number of the store and estimated delivery time or 
+
+
+
+Roulette custom controller
+
+POST /roulette_order - {MAX_PRICE: INT, ALLOW DUPLICATES: BOOL, STORE: STRING}
+
+
+}

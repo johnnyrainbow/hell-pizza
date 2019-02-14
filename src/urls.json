@@ -1,0 +1,5 @@
+{   "BASE_URL": "https://online.hellpizza.com/api/1.0",
+    "menu": {
+        "full_menu": "/stores/1/menu"
+    }
+}
