@@ -2,6 +2,7 @@ var http = require('request');
 var urls = require('../urls.json')
 
 module.exports.post = function (url, req, callback) {
+
     if (typeof req != 'string')
         req = JSON.stringify(req)
 
@@ -14,16 +15,15 @@ module.exports.post = function (url, req, callback) {
     };
 
     http.post(requestBody, function (error, res, body) {
-        if (error) {
+        if (error)
             return callback(error)
-        }
-        if (res.statusCode !== 200) {
-            return callback('HTML Status Code Error ' + res.statusCode)
-        }
+
+        if (res.statusCode !== 200)
+            return callback('Status Code Error ' + res.statusCode)
+
         try {
             var parsed = JSON.parse(body);
-        }
-        catch (error) {
+        } catch (error) {
             return callback(error)
         }
         return callback(null, parsed)
@@ -31,18 +31,17 @@ module.exports.post = function (url, req, callback) {
 }
 
 module.exports.get = function (url, callback) {
-
+    
     http.get(url, function (error, res, body) {
-        if (error) {  //If request errored out.
+        if (error)
             return callback(error)
-        }
-        if (res.statusCode !== 200) {  //If request didn't error but response isn't status code 200.
-            return callback('HTML Status Code Error ' + res.statusCode)
-        }
+
+        if (res.statusCode !== 200)
+            return callback('Status Code Error ' + res.statusCode)
+
         try {
             var parsed = JSON.parse(body);
-        }
-        catch (error) {
+        } catch (error) {
             return callback(error)
         }
         return callback(null, parsed)
