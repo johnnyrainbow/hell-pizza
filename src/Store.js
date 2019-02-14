@@ -1,6 +1,5 @@
-var urls = require('./urls.json');
-var httpJson = require('./request/request');
-var RequestFormatter = require('./request/request_formatter')
+var urls = require('./urls.json')
+var httpJson = require('./request/request')
 
 class Store {
     constructor() {

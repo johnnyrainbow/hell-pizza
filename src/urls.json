@@ -1,8 +1,9 @@
-{   "BASE_URL": "https://online.hellpizza.com/api/1.0",
+{
+    "BASE_URL": "https://online.hellpizza.com/api/1.0",
     "menu": {
         "full_menu": "/stores/1/menu"
     },
     "stores": {
-        "region":"/regions/region-info.json?_=1550128476981"
+        "region": "/regions/region-info.json?_=1550128476981"
     }
 }

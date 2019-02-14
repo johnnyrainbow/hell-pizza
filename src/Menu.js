@@ -1,11 +1,11 @@
-var urls = require('./urls.json');
-var httpJson = require('./request/request');
-var RequestFormatter = require('./request/request_formatter')
-
+var urls = require('./urls.json')
+var httpJson = require('./request/request')
 
 class Menu {
     constructor(menu) {
         this.menu = menu || {}
+        //the hell pizza api does not categorize their foods, 
+        //they are sorted in ranges. 
         this.pizza_id_range = { min: 4, max: 31 }
         this.sides_id_range = { min: 32, max: 52 }
         this.salads_id_range = { min: 53, max: 57 }
@@ -39,6 +39,8 @@ class Menu {
     rangeRequest(min, max, callback) {
 
         httpJson.get(urls.menu.full_menu, function (err, response) {
+            if (err) return callback(err)
+
             var result = response.payload.menu.items
             if (min && max) {
                 result = response.payload.menu.items.filter(obj => {
