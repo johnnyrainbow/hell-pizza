@@ -15,9 +15,7 @@ class Menu {
     }
 
     getMenuItems(callback) { //gets all menu items
-        httpJson.get(RequestFormatter.formatRequest(urls.menu.full_menu), function (err, response) {
-            callback(null, response.payload.menu.items)
-        })
+        this.rangeRequest(null, null, callback)
     }
     getPizzas(callback) {
         this.rangeRequest(this.pizza_id_range.min, this.pizza_id_range.max, callback)
@@ -41,21 +39,12 @@ class Menu {
     rangeRequest(min, max, callback) {
 
         httpJson.get(RequestFormatter.formatRequest(urls.menu.full_menu), function (err, response) {
-
-            var result = response.payload.menu.items.filter(obj => {
-                return obj.item_id >= min && obj.item_id <= max
-            })
-            return callback(null, result)
-        })
-    }
-
-    getDrinks(callback) {
-        var self = this
-        httpJson.get(RequestFormatter.formatRequest(urls.menu.full_menu), function (err, response) {
-
-            var result = response.payload.menu.items.filter(obj => {
-                return obj.item_id >= self.pizza_range_low && obj.item_id <= self.pizza_range_high
-            })
+            var result = response.payload.menu.items
+            if (min && max) {
+                result = response.payload.menu.items.filter(obj => {
+                    return obj.item_id >= min && obj.item_id <= max
+                })
+            }
             return callback(null, result)
         })
     }
