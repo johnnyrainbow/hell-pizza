@@ -38,7 +38,7 @@ class Menu {
 
     rangeRequest(min, max, callback) {
 
-        httpJson.get(RequestFormatter.formatRequest(urls.menu.full_menu), function (err, response) {
+        httpJson.get(urls.menu.full_menu, function (err, response) {
             var result = response.payload.menu.items
             if (min && max) {
                 result = response.payload.menu.items.filter(obj => {

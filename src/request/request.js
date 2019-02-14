@@ -1,5 +1,6 @@
 var http = require('request');
 var urls = require('../urls.json')
+var RequestFormatter = require('./request_formatter')
 
 module.exports.post = function (url, req, callback) {
 
@@ -7,7 +8,7 @@ module.exports.post = function (url, req, callback) {
         req = JSON.stringify(req)
 
     var requestBody = {
-        uri: url,
+        uri: RequestFormatter.formatRequest(url),
         headers: {
             'Content-Type': 'application/json'
         },
@@ -31,8 +32,8 @@ module.exports.post = function (url, req, callback) {
 }
 
 module.exports.get = function (url, callback) {
-    
-    http.get(url, function (error, res, body) {
+
+    http.get(RequestFormatter.formatRequest(url), function (error, res, body) {
         if (error)
             return callback(error)
 
@@ -47,3 +48,6 @@ module.exports.get = function (url, callback) {
         return callback(null, parsed)
     });
 }
+
+
+
