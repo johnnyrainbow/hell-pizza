@@ -1,6 +1,6 @@
 var urls = require('./urls.json');
-var httpJson = require('./http-json');
-var RequestFormatter = require('./request_formatter')
+var httpJson = require('./request/request');
+var RequestFormatter = require('./request/request_formatter')
 
 
 class Menu {
@@ -13,7 +13,7 @@ class Menu {
         this.soft_drinks_id_range = { min: 66, max: 92 }
         this.alcoholic_drinks_id_range = { min: 108, max: 139 }
     }
-    
+
     getMenuItems(callback) { //gets all menu items
         httpJson.get(RequestFormatter.formatRequest(urls.menu.full_menu), function (err, response) {
             callback(null, response.payload.menu.items)
