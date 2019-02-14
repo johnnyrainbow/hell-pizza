@@ -1,5 +1,6 @@
 node_modules
 .DS_Store
+plan.txt
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
