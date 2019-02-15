@@ -5,7 +5,7 @@ class Menu {
     constructor(menu) {
         this.menu = menu || {}
         //the hell pizza api does not categorize their foods on the API, 
-        //therefore we will define categories by ranges. 
+        //therefore we will define categories by ranges.
         this.pizza_id_range = { min: 4, max: 31 }
         this.sides_id_range = { min: 32, max: 52 }
         this.salads_id_range = { min: 53, max: 57 }
@@ -42,7 +42,7 @@ class Menu {
             if (err) return callback(err)
 
             var result = response.payload.menu.items
-            if (minmax) {
+            if (range) {
                 result = response.payload.menu.items.filter(obj => {
                     return obj.item_id >= range.min && obj.item_id <= range.max
                 })
