@@ -1,4 +1,4 @@
-var urls = require('./urls.json')
+var url = require('./json/urls.json')
 var httpJson = require('./request/request')
 
 class Menu {
@@ -38,7 +38,7 @@ class Menu {
 
     rangeRequest(range, callback) {
 
-        httpJson.get(urls.menu.full_menu, function (err, response) {
+        httpJson.get(url.menu.full_menu, function (err, response) {
             if (err) return callback(err)
 
             var result = response.payload.menu.items

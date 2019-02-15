@@ -2,7 +2,7 @@
     "error": {
         "bad_code": "Status Code Error: ",
         "region_not_found": "Region not found: ",
-        "no_lat_lng":"You must provide a latitude and longitude.",
+        "no_lat_lng": "You must provide a latitude and longitude.",
         "no_nearest_store": "We could not find your nearest store."
     },
     "success": {},

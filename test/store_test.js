@@ -36,6 +36,7 @@ describe('Store', function () {
             store.getNearestStore(lat, lng, function (err, response) {
                 expect(err).to.be.null
                 expect(response).not.to.be.null
+                expect(response.name).to.equal('Hataitai') //closest store for test lat lng
                 done()
             })
         })

@@ -1,0 +1,20 @@
+{
+    "region_list": {
+        "AUCKLAND": "auckland",
+        "NORTHLAND": "northland",
+        "BAY_OF_PLENTY": "bay-of-plenty",
+        "WAIKATO": "waikato",
+        "TAUPO": "taupo",
+        "TARANAKI": "taranaki",
+        "HAWKES_BAY": "hawkes-bay",
+        "MANAWATU": "manawatu",
+        "WAIRAPA": "wairapa",
+        "WELLINGTON": "wellington",
+        "NELSON": "nelson",
+        "CANTERBURY": "canterbury",
+        "TIMARU": "timaru",
+        "QUEENSTOWN": "queenstown",
+        "OTAGO": "otago",
+        "SOUTHLAND": "southland"
+    }
+}

@@ -1,7 +1,7 @@
 var chai = require('chai');
 var expect = chai.expect;
 var httpJson = require('../src/request/request')
-var Status = require('../src/status_codes/codes.json')
+var Status = require('../src/json/status_codes.json')
 
 describe('API', function () {
     describe('CheckAPIStatus', function () {

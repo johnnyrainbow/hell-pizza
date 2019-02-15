@@ -1,6 +1,6 @@
 var http = require('request')
-var RequestFormatter = require('./request_formatter')
-var Status = require('../status_codes/codes.json')
+var requestFormatter = require('./request_formatter')
+var status = require('../json/status_codes.json')
 
 module.exports.post = function (url, req, callback) {
 
@@ -8,7 +8,7 @@ module.exports.post = function (url, req, callback) {
         req = JSON.stringify(req)
 
     var requestBody = {
-        uri: RequestFormatter.formatRequest(url),
+        uri: requestFormatter.formatRequest(url),
         headers: {
             'Content-Type': 'application/json'
         },
@@ -20,7 +20,7 @@ module.exports.post = function (url, req, callback) {
             return callback(error)
 
         if (res.statusCode !== 200)
-            return callback(Status.error.bad_code + res.statusCode)
+            return callback(status.error.bad_code + res.statusCode)
 
         try {
             var parsed = JSON.parse(body);
@@ -33,12 +33,12 @@ module.exports.post = function (url, req, callback) {
 
 module.exports.get = function (url, callback) {
 
-    http.get(RequestFormatter.formatRequest(url), function (error, res, body) {
+    http.get(requestFormatter.formatRequest(url), function (error, res, body) {
         if (error)
             return callback(error)
 
         if (res.statusCode !== 200)
-            return callback(Status.error.bad_code + res.statusCode)
+            return callback(status.error.bad_code + res.statusCode)
 
         try {
             var parsed = JSON.parse(body);
