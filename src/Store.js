@@ -20,6 +20,8 @@ class Store {
     }
 
     getSingleRegionStores(region, callback) {
+        if (!region) 
+            return callback(status.error.no_provided_region)
 
         httpJson.get(url.stores.region, function (err, response) {
             if (err) return callback(err)
@@ -36,7 +38,8 @@ class Store {
     }
 
     getNearestStore(lat, lng, callback) {
-        if (!lat || !lng) return callback(status.error.no_lat_lng)
+        if (!lat || !lng) 
+            return callback(status.error.no_lat_lng)
 
         httpJson.get(url.stores.region, function (err, response) {
             if (err) return callback(err)
@@ -44,7 +47,7 @@ class Store {
             var result = response.payload
             var closestDist
             var nearestStore
-            
+
             for (var i = 0; i < result.length; i++) {
                 for (var j = 0; j < result[i].stores.length; j++) {
                     var store = result[i].stores[j]

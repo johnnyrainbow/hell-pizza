@@ -10,6 +10,7 @@ class User {
     checkAccountExists(email, callback) {
         if (!email)
             return callback(status.error.no_provided_email)
+
         httpJson.get(url.user.email_check + email, function (err, response) {
             if (err) return callback(err)
 

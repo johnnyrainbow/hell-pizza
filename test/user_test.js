@@ -38,7 +38,7 @@ describe('User', function () {
         })
     })
     describe('checkLoginFailure', function () {
-        it('should check if can login with valid account', function (done) {
+        it('should check if cant login with invalid account', function (done) {
             var valid_email = 'npmtester@gmail.com'
             var valid_password = "badpass"
             var user = new User()
