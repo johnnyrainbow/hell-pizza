@@ -9,6 +9,6 @@ A node.js wrapper for the Hell's Pizza API
   var Menu = new hellPizza.Menu()
   
   Menu.getPizzas(function (err, response) {
-    if (err) return err
-      //json formatted response
+    if (err) //handler error
+    //json formatted response
   })```

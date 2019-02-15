@@ -14,7 +14,7 @@ class Menu {
         this.alcoholic_drinks_id_range = { min: 108, max: 139 }
     }
 
-    getMenuItems(callback) { //gets entire menu
+    getMenuItems(callback) { //gets entire storewide menu
         this.rangeRequest(null, callback)
     }
     getPizzas(callback) {

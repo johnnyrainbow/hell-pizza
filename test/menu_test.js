@@ -1,4 +1,3 @@
-var mocha = require('mocha');
 var chai = require('chai');
 var expect = chai.expect;
 var Menu = require('../src/Menu')
@@ -14,7 +13,6 @@ describe('Menu', function () {
                 expect(response.length).to.equal(total_menu_size)
                 done()
             })
-
         })
     })
     describe('FullMenu', function () {

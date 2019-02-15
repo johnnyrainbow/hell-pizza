@@ -1,7 +1,5 @@
-var mocha = require('mocha');
 var chai = require('chai');
 var expect = chai.expect;
-var urls = require('../src/urls.json')
 var httpJson = require('../src/request/request')
 var Status = require('../src/status_codes/codes.json')
 
