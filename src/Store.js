@@ -42,8 +42,9 @@ class Store {
             if (err) return callback(err)
 
             var result = response.payload
-            var nearestStore
             var closestDist
+            var nearestStore
+            
             for (var i = 0; i < result.length; i++) {
                 for (var j = 0; j < result[i].stores.length; j++) {
                     var store = result[i].stores[j]

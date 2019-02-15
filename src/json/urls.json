@@ -5,5 +5,9 @@
     },
     "stores": {
         "region": "/regions/region-info.json?_=1550128476981"
+    },
+    "user": {
+        "email_check": "/auth/account-exists?email=",
+        "login":"/auth/authenticate"
     }
 }
