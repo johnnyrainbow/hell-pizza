@@ -13,6 +13,8 @@
     },
     "order": {
         "init_order": "/orders",
-        "add_item": "/orders/{{ORDER_TOKEN}}/items"
+        "add_item": "/orders/${ORDER_TOKEN}/items",
+        "remove_item":"/orders/${ORDER_TOKEN}/items/${ORDER_ITEM_ID}",
+        "update_prefs":"/orders/${ORDER_TOKEN}?order_id=${ORDER_ID}"
     }
 }

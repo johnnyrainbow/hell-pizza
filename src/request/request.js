@@ -10,7 +10,7 @@ module.exports.post = function (url, req, callback) {
     var requestBody = {
         uri: requestFormatter.formatRequest(url),
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         body: req
     };
@@ -48,6 +48,25 @@ module.exports.get = function (url, callback) {
         return callback(null, parsed)
     });
 }
+
+module.exports.delete = function (url, callback) {
+    
+    http.delete(requestFormatter.formatRequest(url), function (error, res, body) {
+        if (error)
+            return callback(error)
+
+        if (res.statusCode !== 200)
+            return callback(body)
+
+        try {
+            var parsed = JSON.parse(body);
+        } catch (error) {
+            return callback(error)
+        }
+        return callback(null, parsed)
+    });
+}
+
 
 
 

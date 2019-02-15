@@ -2,5 +2,9 @@
     "pizza_sizes": {
         "SNACK": 2,
         "DOUBLE": 3
+    },
+    "order_type": {
+        "PICKUP": 1,
+        "DELIVERY": 2
     }
 }
