@@ -1,8 +1,8 @@
 var url = require('./json/urls.json')
-var region = require('./json/region.json')
 var status = require('./json/status_codes.json')
 var httpJson = require('./request/request')
 var codes = require('./json/codes.json')
+var util = require('./util/order_util')
 
 class Order {
     constructor(store_id, menu, user) {
@@ -62,7 +62,7 @@ class Order {
             if (err) return callback(err)
             var result = response.payload
 
-            self.setUpdateItems(result)
+            util.setUpdateItems(self, result)
 
             return callback(null, status.success.added_item)
         })
@@ -76,7 +76,7 @@ class Order {
             return callback(status.error.no_items_to_remove)
 
         if (!order_item_id)
-            return callback(status.error.must_provide_id)
+            return callback(status.error.no_provided_id)
 
         var formatted_url = url.order.remove_item
             .replace('${ORDER_TOKEN}', this.token)
@@ -87,13 +87,13 @@ class Order {
             if (err) return callback(err)
             var result = response.payload
 
-            self.setUpdateItems(result)
+            util.setUpdateItems(self, result)
 
             return callback(null, status.success.removed_item)
         })
     }
 
-    updateOrderType(type) {
+    updateOrderType(type, callback) {
         if (!type) return callback(status.error.no_provided_type)
 
         if (!this.token || !this.order_id)
@@ -103,11 +103,13 @@ class Order {
             .replace('${ORDER_TOKEN}', this.token)
             .replace('${ORDER_ID}', this.order_id)
 
-        var data = this.configureUpdateData({ order_type_id: type })
+        var data = util.configureUpdateData(this, { order_type_id: type })
         var self = this
         httpJson.post(formatted_url, data, function (err, response) {
             if (err) return callback(err)
             var result = response.payload
+
+            util.setUpdateItems(self, result)
             self.order_type_id = result.order_type_id
             return callback(null, status.success.updated_order_type)
         })
@@ -116,29 +118,6 @@ class Order {
     placeOrder(callback) {
         if (!this.user) return callback(status.error.no_provided_user)
         //TODO
-    }
-
-    setUpdateItems(result) {
-        this.items = result.items
-        this.price.total = result.total_price
-        this.price.total_tax = result.total_tax
-        this.price.delivery_fee = result.delivery_fee
-        this.price.surcharge = result.surcharge
-        this.price.discount = result.discount
-    }
-
-    configureUpdateData(options) {
-        options = options || {}
-        var data = {
-            customer_address_id: options.address || this.address,
-            location_id: options.location || null,
-            menu_id: this.menu_id,
-            notes: options.notes || this.notes,
-            order_type_id: options.type || this.order_type_id,
-            store_id: this.store_id,
-            time_scheduled: this.time_scheduled,
-        }
-        return data
     }
 }
 

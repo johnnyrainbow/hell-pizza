@@ -4,16 +4,18 @@
         "region_not_found": "Region not found: ",
         "no_lat_lng": "You must provide a latitude and longitude.",
         "no_nearest_store": "We could not find your nearest store.",
+
         "no_provided_region": "You must provide a region",
         "no_provided_email": "Missing provided email",
         "no_provided_user_pass": "Missing login credentials",
         "no_provided_credentials": "Missing register credentials",
         "no_provided_user": "Missing order User.",
+        "no_provided_type": "You must provide an order type to set pickup or delivery",
+        "no_provided_id": "You must provide an order_item_id of the item in your order that you wish to remove.",
+
         "missing_item_params": "Missing item parameters.",
         "missing_token": "You are missing your order token or order_id. Ensure that you have instantiated your order.",
-        "no_provided_type": "You must provide an order type to set pickup or delivery",
-        "no_items_to_remove": "You do not have any items left to remove.",
-        "must_provide_id": "You must provide an order_item_id of the item in your order that you wish to remove."
+        "no_items_to_remove": "You do not have any items left to remove."
     },
     "success": {
         "init_order": "Your order has been successfully instantiated. You may now add items.",

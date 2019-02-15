@@ -1,16 +1,15 @@
 var url = require('./json/urls.json')
 var region = require('./json/region.json')
 var status = require('./json/status_codes.json')
-
 var httpJson = require('./request/request')
 var geolib = require('geolib')
+
 class Store {
     constructor() {
         this.region_list = region.region_list
     }
 
     getAllRegionStores(callback) {
-
         httpJson.get(url.stores.region, function (err, response) {
             if (err) return callback(err)
 
@@ -45,8 +44,7 @@ class Store {
             if (err) return callback(err)
 
             var result = response.payload
-            var closestDist
-            var nearestStore
+            var nearest = { distance: null, store: null }
 
             for (var i = 0; i < result.length; i++) {
                 for (var j = 0; j < result[i].stores.length; j++) {
@@ -56,16 +54,16 @@ class Store {
                         { latitude: lat, longitude: lng }
                     );
 
-                    if (!closestDist || dist < closestDist) {
-                        closestDist = dist
-                        nearestStore = store
+                    if (!nearest.distance || dist < nearest.distance) {
+                        nearest.distance = dist
+                        nearest.store = store
                     }
                 }
             }
-            if (!nearestStore)
+            if (!nearest.store)
                 return callback(status.error.no_nearest_store)
 
-            return callback(null, nearestStore)
+            return callback(null, nearest.store)
         })
     }
 

@@ -1,7 +1,5 @@
 var url = require('./json/urls.json')
-var region = require('./json/region.json')
 var status = require('./json/status_codes.json')
-
 var httpJson = require('./request/request')
 
 class User {

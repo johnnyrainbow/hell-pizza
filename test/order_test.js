@@ -3,6 +3,8 @@ var expect = chai.expect;
 var Order = require('../src/Order')
 var Menu = require('../src/Menu')
 var async = require('async')
+var codes = require('../src/json/codes.json')
+
 describe('Order', function () {
     describe('CheckInitOrder', function () {
         it('should attempt to init order', function (done) {
@@ -28,6 +30,7 @@ describe('Order', function () {
             var item_size_id = 3
 
             order.initOrder(function (err) {
+                expect(err).to.be.null
                 order.addItemToOrder(item_id, item_size_id, item_quantity, {}, '', function (err, response) {
                     expect(err).to.be.null
                     expect(response).to.exist
@@ -70,6 +73,42 @@ describe('Order', function () {
                 expect(order.items.length).to.equal(0)
                 done()
             });
+        })
+    })
+
+    describe('CheckUpdateOrderType', function () {
+        it('should attempt to update pickup to delivery', function (done) {
+            var menu = new Menu()
+            var store_id = 1
+            var order = new Order(store_id, menu, null)
+            order.order_type_id = codes.order_type.PICKUP
+            order.initOrder(function (err) {
+                expect(err).to.be.null
+                order.updateOrderType(codes.order_type.DELIVERY, function (err, response) {
+                    expect(err).to.be.null
+                    expect(response).not.to.be.null
+                    expect(order.order_type_id).to.equal(codes.order_type.DELIVERY)
+                    expect(order.price.delivery_fee).to.equal(codes.fees.DELIVERY_FEE)
+                    done()
+                })
+            })
+        })
+        it('should attempt to update delivery to pickup', function (done) {
+            var menu = new Menu()
+            var store_id = 1
+            var order = new Order(store_id, menu, null)
+            order.order_type_id = codes.order_type.DELIVERY
+            order.price.delivery_fee = codes.fees.DELIVERY_FEE
+            order.initOrder(function (err) {
+                expect(err).to.be.null
+                order.updateOrderType(codes.order_type.PICKUP, function (err, response) {
+                    expect(err).to.be.null
+                    expect(response).not.to.be.null
+                    expect(order.order_type_id).to.equal(codes.order_type.PICKUP)
+                    expect(order.price.delivery_fee).to.equal(0)
+                    done()
+                })
+            })
         })
     })
 })

@@ -38,7 +38,7 @@ class Menu {
     }
 
     rangeRequest(range, callback) {
-
+        
         httpJson.get(url.menu.full_menu, function (err, response) {
             if (err) return callback(err)
 
