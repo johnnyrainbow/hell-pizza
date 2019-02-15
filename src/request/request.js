@@ -20,7 +20,7 @@ module.exports.post = function (url, req, callback) {
             return callback(error)
 
         if (res.statusCode !== 200)
-            return callback(status.error.bad_code + res.statusCode)
+            return callback(body)
 
         try {
             var parsed = JSON.parse(body);
@@ -38,7 +38,7 @@ module.exports.get = function (url, callback) {
             return callback(error)
 
         if (res.statusCode !== 200)
-            return callback(status.error.bad_code + res.statusCode)
+            return callback(body)
 
         try {
             var parsed = JSON.parse(body);

@@ -8,6 +8,7 @@
     },
     "user": {
         "email_check": "/auth/account-exists?email=",
-        "login":"/auth/authenticate"
+        "login": "/auth/authenticate",
+        "register": "/customers"
     }
 }
