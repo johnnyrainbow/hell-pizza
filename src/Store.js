@@ -20,7 +20,7 @@ class Store {
     }
 
     getSingleRegionStores(region, callback) {
-        if (!region) 
+        if (!region)
             return callback(status.error.no_provided_region)
 
         httpJson.get(url.stores.region, function (err, response) {
@@ -38,7 +38,7 @@ class Store {
     }
 
     getNearestStore(lat, lng, callback) {
-        if (!lat || !lng) 
+        if (!lat || !lng)
             return callback(status.error.no_lat_lng)
 
         httpJson.get(url.stores.region, function (err, response) {
@@ -68,6 +68,8 @@ class Store {
             return callback(null, nearestStore)
         })
     }
+
+    //getTopNearestStores
 }
 
 module.exports = Store

@@ -10,5 +10,9 @@
         "email_check": "/auth/account-exists?email=",
         "login": "/auth/authenticate",
         "register": "/customers"
+    },
+    "order": {
+        "init_order": "/orders",
+        "add_item": "/orders/{{ORDER_TOKEN}}/items"
     }
 }

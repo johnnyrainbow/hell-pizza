@@ -4,12 +4,15 @@
         "region_not_found": "Region not found: ",
         "no_lat_lng": "You must provide a latitude and longitude.",
         "no_nearest_store": "We could not find your nearest store.",
-        "no_provided_region": "You did not provide a region",
-        "no_provided_email":"You did not provide an email",
-        "no_provided_user_pass":"You did not provide login credentials",
-        "no_provided_credentials":"You did not provide register credentials"
+        "no_provided_region": "You must provide a region",
+        "no_provided_email":"Missing provided email",
+        "no_provided_user_pass":"Missing login credentials",
+        "no_provided_credentials":"Missing register credentials",
+        "no_provided_user":"Missing order User."
 
     },
-    "success": {},
+    "success": {
+        "init_order":"Your order has been instantiated. You may now add items."
+    },
     "warning": {}
 }
