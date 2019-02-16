@@ -115,8 +115,9 @@ class Order {
         })
     }
 
-    placeOrder(callback) {
-        if (!this.user) return callback(status.error.no_provided_user)
+    submitOrder(callback) {
+        if (!this.user)
+             return callback(status.error.no_provided_user)
         //TODO
     }
 }

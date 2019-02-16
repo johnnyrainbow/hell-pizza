@@ -2,8 +2,7 @@ module.exports = {
     Menu: require('./src/Menu'),
     Store: require('./src/Store'),
     User: require('./src/User'),
+    Order: require('./src/Order')
 };
-var Logger =require('./src/lib/Logger')
-var logger = new Logger() //TODO singleton this
-module.exports = logger
+
 

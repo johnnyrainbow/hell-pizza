@@ -66,7 +66,6 @@ class Store {
             return callback(null, nearest.store)
         })
     }
-
     //getTopNearestStores
 }
 
