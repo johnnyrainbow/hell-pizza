@@ -22,7 +22,8 @@
         "init_order": "Your order has been successfully instantiated. You may now add items.",
         "added_item": "Successfully added item to your order.",
         "updated_order_type": "Successfully updated your order type.",
-        "removed_item": "Successfully removed item from your order."
+        "removed_item": "Successfully removed item from your order.",
+        "applied_voucher_code":"Successfully applied voucher code"
     },
     "warning": {}
 }

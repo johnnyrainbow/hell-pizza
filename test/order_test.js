@@ -111,4 +111,24 @@ describe('Order', function () {
             })
         })
     })
+
+
+    describe('CheckVoucherCode', function () {
+        it('should attempt to apply voucher code', function (done) {
+            var menu = new Menu()
+            var store_id = 21 //wellington store
+            var order = new Order(store_id, menu, null)
+            var voucher_code = "WELLY25WEDGES" //wellington only
+            order.setStoreId(store_id)
+            order.initOrder(function (err) {
+                expect(err).to.be.null
+                order.applyVoucherCode(voucher_code, function (err, response) {
+                    expect(err).to.be.null
+                    expect(response).not.to.be.null
+                    done()
+                })
+            })
+        })
+    })
+
 })

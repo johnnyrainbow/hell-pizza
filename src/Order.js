@@ -112,19 +112,24 @@ class Order {
     }
 
     applyVoucherCode(voucher_code, callback) {
-        if (!voucher_code) return callback(status.error.no_provided_voucher)
-        var formatted_url = util.formatOrderURL(this, url.order.voucher_code)
+        if (!voucher_code)
+            return callback(status.error.no_provided_voucher)
 
+        var formatted_url = util.formatOrderURL(this, url.order.voucher_code)
+        var data = {
+            order_token: this.token,
+            voucher_code: voucher_code
+        }
+        var self = this
         httpJson.post(formatted_url, data, function (err, response) {
             if (err) return callback(err)
+
             var result = response.payload
-
             util.setUpdateItems(self, result)
-            self.order_type_id = result.order_type_id
-            return callback(null, status.success.updated_order_type)
+            return callback(null, response.voucher)
         })
-
     }
+
     submitOrder(callback) {
         if (!this.user)
             return callback(status.error.no_provided_user)
