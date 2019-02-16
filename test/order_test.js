@@ -120,14 +120,78 @@ describe('Order', function () {
             var order = new Order(store_id, menu, null)
             var voucher_code = "WELLY25WEDGES" //wellington only
             order.setStoreId(store_id)
-            order.initOrder(function (err) {
+            var p1
+            async.series([
+                function (callback) {
+                    order.initOrder(function (err, response) {
+                        callback(err, response)
+                    })
+                },
+                function (callback) {
+                    order.addItemToOrder(5, 3, 2, {}, '', function (err, response) {
+                        p1 = order.price.total
+                        callback(err, response)
+                    })
+                },
+                function (callback) {
+                    order.addItemToOrder(42, 1, 1, {}, '', function (err, response) {
+                        callback(err, response)
+                    })
+                },
+                function (callback) {
+                    order.applyVoucherCode(voucher_code, function (err, response) {
+                        callback(err, response)
+                    })
+                }
+            ], function (err, results) {
                 expect(err).to.be.null
-                order.applyVoucherCode(voucher_code, function (err, response) {
-                    expect(err).to.be.null
-                    expect(response).not.to.be.null
-                    done()
-                })
-            })
+                expect(results).not.to.be.null
+                expect(order.price.total).to.equal(p1)
+                done()
+            });
+        })
+    })
+    describe('ClearVoucherCode', function () {
+        it('should attempt to clear voucher code', function (done) {
+            var menu = new Menu()
+            var store_id = 21 //wellington store
+            var order = new Order(store_id, menu, null)
+            var voucher_code = "WELLY25WEDGES" //wellington only
+            order.setStoreId(store_id)
+            var p1
+            async.series([
+                function (callback) {
+                    order.initOrder(function (err, response) {
+                        callback(err, response)
+                    })
+                },
+                function (callback) {
+                    order.addItemToOrder(5, 3, 2, {}, '', function (err, response) {
+                        callback(err, response)
+                    })
+                },
+                function (callback) {
+                    order.addItemToOrder(42, 1, 1, {}, '', function (err, response) {
+                        p1 = order.price.total
+                        callback(err, response)
+                    })
+                },
+                function (callback) {
+                    order.applyVoucherCode(voucher_code, function (err, response) {
+                        callback(err, response)
+                    })
+                },
+                function(callback) {
+                    order.clearVoucherCode(function (err, response) {
+                        callback(err, response)
+                    }) 
+                }
+            ], function (err, results) {
+                expect(err).to.be.null
+                expect(results).not.to.be.null
+                expect(order.price.total).to.equal(p1)
+                done()
+            });
         })
     })
 

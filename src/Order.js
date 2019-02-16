@@ -129,6 +129,19 @@ class Order {
             return callback(null, response.voucher)
         })
     }
+    
+    clearVoucherCode(callback) {
+        var formatted_url = util.formatOrderURL(this, url.order.voucher_code)
+
+        var self = this
+        httpJson.delete(formatted_url, function (err, response) {
+            if (err) return callback(err)
+
+            var result = response.payload
+            util.setUpdateItems(self, result)
+            return callback(null, response.voucher)
+        })
+    }
 
     submitOrder(callback) {
         if (!this.user)
