@@ -21,5 +21,11 @@ module.exports = {
             time_scheduled: self.time_scheduled,
         }
         return data
+    },
+
+    formatOrderURL(self, url, order_item_id) {
+        return url.replace('${ORDER_TOKEN}', self.token)
+            .replace('${ORDER_ID}', self.order_id)
+            .replace('${ORDER_ITEM_ID}', order_item_id)
     }
 }

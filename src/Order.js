@@ -48,7 +48,7 @@ class Order {
             return callback(status.error.missing_token)
 
 
-        var formatted_url = url.order.add_item.replace('${ORDER_TOKEN}', this.token)
+        var formatted_url = util.formatOrderURL(this, url.order.add_item)
 
         var data = {
             item_id: item_id,
@@ -78,9 +78,7 @@ class Order {
         if (!order_item_id)
             return callback(status.error.no_provided_id)
 
-        var formatted_url = url.order.remove_item
-            .replace('${ORDER_TOKEN}', this.token)
-            .replace('${ORDER_ITEM_ID}', order_item_id)
+        var formatted_url = util.formatOrderURL(this, url.order.remove_item, order_item_id)
 
         var self = this
         httpJson.delete(formatted_url, function (err, response) {
@@ -99,9 +97,7 @@ class Order {
         if (!this.token || !this.order_id)
             return callback(status.error.missing_token)
 
-        var formatted_url = url.order.update_prefs
-            .replace('${ORDER_TOKEN}', this.token)
-            .replace('${ORDER_ID}', this.order_id)
+        var formatted_url = util.formatOrderURL(this, url.order.update_prefs)
 
         var data = util.configureUpdateData(this, { order_type_id: type })
         var self = this
@@ -115,9 +111,23 @@ class Order {
         })
     }
 
+    applyVoucherCode(voucher_code, callback) {
+        if (!voucher_code) return callback(status.error.no_provided_voucher)
+        var formatted_url = util.formatOrderURL(this, url.order.voucher_code)
+
+        httpJson.post(formatted_url, data, function (err, response) {
+            if (err) return callback(err)
+            var result = response.payload
+
+            util.setUpdateItems(self, result)
+            self.order_type_id = result.order_type_id
+            return callback(null, status.success.updated_order_type)
+        })
+
+    }
     submitOrder(callback) {
         if (!this.user)
-             return callback(status.error.no_provided_user)
+            return callback(status.error.no_provided_user)
         //TODO
     }
 }

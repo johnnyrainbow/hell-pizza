@@ -12,6 +12,7 @@
         "no_provided_user": "Missing order User.",
         "no_provided_type": "You must provide an order type to set pickup or delivery",
         "no_provided_id": "You must provide an order_item_id of the item in your order that you wish to remove.",
+        "no_provided_voucher":"You must provide a voucher code.",
 
         "missing_item_params": "Missing item parameters.",
         "missing_token": "You are missing your order token or order_id. Ensure that you have instantiated your order.",
