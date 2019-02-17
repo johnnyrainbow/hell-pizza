@@ -22,6 +22,46 @@ class Order {
     setUser(user) {
         this.user = user
     }
+    //move address into user
+    findAddress(address_query, callback) {
+        if (!address_query || address_query == '')
+            return callback(status.error.no_provided_address)
+
+        var formatted_url = util.formatOrderURL(this, url.user.find_address, { address_query: address_query })
+        var self = this
+        httpJson.get(formatted_url, function (err, response) {
+            if (err) return callback(err)
+            var result = response.payload
+            return callback(null, result)
+        })
+    }
+
+    setAddress(address_response, callback) {
+        if (!address_response)
+            return callback(status.error.no_provided_address)
+
+        if (!this.user)
+            return callback(status.error.no_provided_user)
+
+        this.address = address_response
+
+        this.location_hash = address_response.location_hash
+        var formatted_url = util.formatOrderURL(this, url.order.set_address, { customer_id: this.user.customer_id })
+        console.log(formatted_url)
+        var data = {
+            location_id: this.location_hash,
+            customer_address_type_id: codes.address_type.RESIDENTIAL,
+            notes: "",
+            type_data: {},
+            customer_id: this.user.customer_id,
+        }
+        console.log(data)
+        httpJson.post(formatted_url, data, function (err, response) {
+            if (err) return callback(err)
+            //get order times
+            return callback(null, status.success.address_update)
+        })
+    }
 
     initOrder(callback) {
         var self = this
@@ -36,6 +76,7 @@ class Order {
             var result = response.payload
             self.token = result.token
             self.order_id = result.order_id
+            self.time_promised = result.time_promised //soonest the order can be delivered/picked up UTC
             return callback(null, status.success.init_order)
         })
     }
@@ -47,9 +88,7 @@ class Order {
         if (!this.token)
             return callback(status.error.missing_token)
 
-
         var formatted_url = util.formatOrderURL(this, url.order.add_item)
-
         var data = {
             item_id: item_id,
             item_size_id: item_size_id,
@@ -78,7 +117,7 @@ class Order {
         if (!order_item_id)
             return callback(status.error.no_provided_id)
 
-        var formatted_url = util.formatOrderURL(this, url.order.remove_item, order_item_id)
+        var formatted_url = util.formatOrderURL(this, url.order.remove_item, { order_item_id: order_item_id })
 
         var self = this
         httpJson.delete(formatted_url, function (err, response) {
@@ -129,7 +168,7 @@ class Order {
             return callback(null, response.voucher)
         })
     }
-    
+
     clearVoucherCode(callback) {
         var formatted_url = util.formatOrderURL(this, url.order.voucher_code)
 
@@ -143,10 +182,28 @@ class Order {
         })
     }
 
-    submitOrder(callback) {
+    getOrderTimes() {
+
+    }
+    submitOrder(payment_type, callback) { //what happens if i submit a different ordertoken? 
         if (!this.user)
             return callback(status.error.no_provided_user)
-        //TODO
+
+        if (!this.address)
+            return callback(status.error.no_provided_address)
+
+        var formatted_url = util.formatOrderURL(this, url.order.place)
+        var data = {
+            order_token: this.token,
+            store_payment_type_id: payment_type
+        }
+        httpJson.post(formatted_url, data, function (err, response) {
+            if (err) return callback(err)
+
+            return callback(response)
+
+            //TODO
+        })
     }
 }
 

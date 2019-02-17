@@ -1,9 +1,12 @@
 var url = require('./json/urls.json')
 var status = require('./json/status_codes.json')
 var httpJson = require('./request/request')
+var util = require('./util/order_util')
 
 class User {
-    constructor() { }
+    constructor() {
+        this.customer_id = null
+    }
 
     checkAccountExists(email, callback) {
         if (!email)
@@ -20,10 +23,11 @@ class User {
     login(email, password, callback) {
         if (!email || !password)
             return callback(status.error.no_provided_user_pass)
-
+        var self = this
         httpJson.post(url.user.login, { uid: email, token: password }, function (err, response) {
             if (err) return callback(err)
             var result = response.payload
+            self.customer_id = result.customer_id
             return callback(null, result)
         })
     }

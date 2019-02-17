@@ -23,9 +23,16 @@ module.exports = {
         return data
     },
 
-    formatOrderURL(self, url, order_item_id) {
+    formatOrderURL(self, url, options) {
+        options = options || {}
         return url.replace('${ORDER_TOKEN}', self.token)
             .replace('${ORDER_ID}', self.order_id)
-            .replace('${ORDER_ITEM_ID}', order_item_id)
+            .replace('${ORDER_ITEM_ID}', options.order_item_id)
+            .replace('${ADDRESS_QUERY}', options.address_query)
+            .replace('${CUSTOMER_ID}', options.customer_id)
+            .replace('${STORE_ID}', options.store_id)
+            .replace('${CUSTOMER_ADDRESS_ID}', options.customer_address_id)
+            .replace('${LOCATION_HASH}', options.location_hash)
+
     }
 }

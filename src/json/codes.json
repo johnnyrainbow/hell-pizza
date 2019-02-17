@@ -9,5 +9,12 @@
     },
     "fees": {
         "DELIVERY_FEE": 8
+    },
+    "payment_type": {
+        "CASH_ON_DELIVERY": 41,
+        "PAY_WITH_CARD_DELIVERY": 43
+    },
+    "address_type": {
+        "RESIDENTIAL": 1
     }
 }

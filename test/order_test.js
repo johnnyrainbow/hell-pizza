@@ -1,9 +1,13 @@
 var chai = require('chai');
 var expect = chai.expect;
 var Order = require('../src/Order')
+var User = require('../src/User')
+var Store = require('../src/Store')
+
 var Menu = require('../src/Menu')
 var async = require('async')
 var codes = require('../src/json/codes.json')
+const voucher = 'WELLY25WEDGES'
 
 describe('Order', function () {
     describe('CheckInitOrder', function () {
@@ -15,6 +19,7 @@ describe('Order', function () {
                 expect(err).to.be.null
                 expect(order.token).to.exist
                 expect(order.order_id).to.exist
+                expect(order.time_promised).to.exist
                 done()
             })
         })
@@ -118,7 +123,7 @@ describe('Order', function () {
             var menu = new Menu()
             var store_id = 21 //wellington store
             var order = new Order(store_id, menu, null)
-            var voucher_code = "WELLY25WEDGES" //wellington only
+            var voucher_code = voucher //wellington only
             order.setStoreId(store_id)
             var p1
             async.series([
@@ -156,7 +161,7 @@ describe('Order', function () {
             var menu = new Menu()
             var store_id = 21 //wellington store
             var order = new Order(store_id, menu, null)
-            var voucher_code = "WELLY25WEDGES" //wellington only
+            var voucher_code = voucher //wellington only
             order.setStoreId(store_id)
             var p1
             async.series([
@@ -181,10 +186,10 @@ describe('Order', function () {
                         callback(err, response)
                     })
                 },
-                function(callback) {
+                function (callback) {
                     order.clearVoucherCode(function (err, response) {
                         callback(err, response)
-                    }) 
+                    })
                 }
             ], function (err, results) {
                 expect(err).to.be.null
@@ -195,4 +200,42 @@ describe('Order', function () {
         })
     })
 
+    describe('checkFindAddress', function () {
+        it('should check if we can find addresses from query', function (done) {
+            var menu = new Menu()
+            var store_id = 21 //wellington store
+            var order = new Order(store_id, menu, null)
+
+            order.findAddress("2/47 constable street", function (err, response) {
+                expect(err).to.be.null
+                expect(response.length).greaterThan(0)
+                done()
+            })
+        })
+    })
+
+    describe('checkSetAddress', function () {
+        it('should check if we can set order address from formatted address', function (done) {
+            var menu = new Menu()
+            var store_id = 21 //wellington store
+            var order = new Order(store_id, menu, null)
+            var valid_email = 'npmtester@gmail.com'
+            var valid_password = "npmtester"
+            var user = new User()
+            var store = new Store()
+            user.login(valid_email, valid_password, function (err, response) {
+                expect(err).to.be.null
+                order.setUser(user)
+                order.findAddress("86A constable street", function (err, response) {
+                    expect(err).to.be.null
+                    var address_response = response[0]
+                    order.setAddress(address_response, function (err, response) {
+                        expect(err).to.be.null
+                        expect(response.length).greaterThan(0)
+                        done()
+                    })
+                })
+            })
+        })
+    })
 })

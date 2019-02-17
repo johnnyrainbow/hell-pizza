@@ -1,6 +1,7 @@
 var chai = require('chai');
 var expect = chai.expect;
 var Store = require('../src/Store')
+var Order = require('../src/Order')
 
 describe('Store', function () {
     describe('CheckAllRegionStores', function () {
@@ -23,6 +24,23 @@ describe('Store', function () {
                 expect(response).not.to.be.null
                 expect(response.length).greaterThan(0)
                 done()
+            })
+        })
+    })
+
+    describe('GetServiceableStores', function () {
+        it('should get all recommended serviceable stores for your location', function (done) {
+            var store = new Store()
+            var order = new Order()
+            order.findAddress("86A constable street", function (err, response) {
+                expect(err).to.be.null
+                var address_response = response[0] //just take the first location in arr 
+                store.getServiceableStores(address_response.location_hash, function (err, response) {
+                    expect(err).to.be.null
+                    expect(response).not.to.be.null
+                    expect(response.length).greaterThan(0)
+                    done()
+                })
             })
         })
     })

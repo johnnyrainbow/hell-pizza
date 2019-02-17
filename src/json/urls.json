@@ -4,19 +4,23 @@
         "full_menu": "/stores/1/menu"
     },
     "stores": {
-        "region": "/regions/region-info.json?_=1550128476981"
+        "region": "/regions/region-info.json?_=1550128476981",
+        "serviceable_stores":"/locations/${LOCATION_HASH}/serviceable-stores?limit=4"
     },
     "user": {
         "email_check": "/auth/account-exists?email=",
         "login": "/auth/authenticate",
-        "register": "/customers"
+        "register": "/customers",
+        "find_address": "/locations/search?limit=10&query=${ADDRESS_QUERY}"
     },
     "order": {
         "init_order": "/orders",
         "add_item": "/orders/${ORDER_TOKEN}/items",
-        "remove_item":"/orders/${ORDER_TOKEN}/items/${ORDER_ITEM_ID}",
-        "update_prefs":"/orders/${ORDER_TOKEN}?order_id=${ORDER_ID}",
-        "voucher_code":"/orders/${ORDER_TOKEN}/voucher-code"
-        
+        "remove_item": "/orders/${ORDER_TOKEN}/items/${ORDER_ITEM_ID}",
+        "update_prefs": "/orders/${ORDER_TOKEN}?order_id=${ORDER_ID}",
+        "voucher_code": "/orders/${ORDER_TOKEN}/voucher-code",
+        "place": "/orders/${ORDER_TOKEN}/place",
+        "set_address": "/customers/${CUSTOMER_ID}/addresses"
+
     }
 }

@@ -1,7 +1,7 @@
 var http = require('request')
 var requestFormatter = require('./request_formatter')
 var status = require('../json/status_codes.json')
-
+var auth = require('../json/auth.json')
 module.exports.post = function (url, req, callback) {
 
     if (typeof req != 'string')
@@ -11,6 +11,7 @@ module.exports.post = function (url, req, callback) {
         uri: requestFormatter.formatRequest(url),
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': auth.header
         },
         body: req
     };
@@ -50,7 +51,7 @@ module.exports.get = function (url, callback) {
 }
 
 module.exports.delete = function (url, callback) {
-    
+
     http.delete(requestFormatter.formatRequest(url), function (error, res, body) {
         if (error)
             return callback(error)
