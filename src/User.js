@@ -14,7 +14,7 @@ class User {
             return callback(status.error.no_provided_email)
 
         httpJson.get(url.user.email_check + email, function (err, response) {
-            if (err) return callback(err)
+            if (err) return callback(status.warn.email_not_exist)
 
             var result = response.payload
             return callback(null, result)

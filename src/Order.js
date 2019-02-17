@@ -143,7 +143,7 @@ class Order {
         })
     }
 
-    submitOrder(payment_type, callback) { //what happens if i submit a different ordertoken? 
+    placeOrder(payment_type, callback) { 
         if (!this.user)
             return callback(status.error.no_provided_user)
 

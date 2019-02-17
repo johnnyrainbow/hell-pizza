@@ -29,5 +29,7 @@
         "applied_voucher_code": "Successfully applied voucher code",
         "address_update": "Successfully updated your order's address."
     },
-    "warning": {}
+    "warn": {
+        "email_not_exist":"This email does not exist."
+    }
 }
