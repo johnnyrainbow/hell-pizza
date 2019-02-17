@@ -1,6 +1,7 @@
 var chai = require('chai');
 var expect = chai.expect;
 var User = require('../src/User')
+var Order = require('../src/User')
 
 describe('User', function () {
     describe('CheckRegisteredEmailExists', function () {
@@ -64,4 +65,38 @@ describe('User', function () {
             })
         })
     })
+    describe('checkFindAddress', function () {
+        it('should check if we can find addresses from query', function (done) {
+
+            var order = new Order()
+
+            order.findAddress("2/47 constable street", function (err, response) {
+                expect(err).to.be.null
+                expect(response.length).greaterThan(0)
+                done()
+            })
+        })
+    })
+
+
+    describe('checkSetAddress', function () {
+        it('should check if we can set order address from formatted address', function (done) {
+            var valid_email = 'npmtester@gmail.com'
+            var valid_password = "npmtester"
+            var user = new User()
+            user.login(valid_email, valid_password, function (err, response) {
+                expect(err).to.be.null
+                user.findAddress("86A constable street", function (err, response) {
+                    expect(err).to.be.null
+                    var address_response = response[0]
+                    user.setAddress(address_response, function (err, response) {
+                        expect(err).to.be.null
+                        expect(response.length).greaterThan(0)
+                        done()
+                    })
+                })
+            })
+        })
+    })
+
 })

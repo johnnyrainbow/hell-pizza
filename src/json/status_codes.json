@@ -18,7 +18,8 @@
 
         "missing_item_params": "Missing item parameters.",
         "missing_token": "You are missing your order token or order_id. Ensure that you have instantiated your order.",
-        "no_items_to_remove": "You do not have any items left to remove."
+        "no_items_to_remove": "You do not have any items left to remove.",
+        "log_in_required":"You must log in as a user before you can set your address"
     },
     "success": {
         "init_order": "Your order has been successfully instantiated. You may now add items.",

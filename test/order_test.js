@@ -199,43 +199,4 @@ describe('Order', function () {
             });
         })
     })
-
-    describe('checkFindAddress', function () {
-        it('should check if we can find addresses from query', function (done) {
-            var menu = new Menu()
-            var store_id = 21 //wellington store
-            var order = new Order(store_id, menu, null)
-
-            order.findAddress("2/47 constable street", function (err, response) {
-                expect(err).to.be.null
-                expect(response.length).greaterThan(0)
-                done()
-            })
-        })
-    })
-
-    describe('checkSetAddress', function () {
-        it('should check if we can set order address from formatted address', function (done) {
-            var menu = new Menu()
-            var store_id = 21 //wellington store
-            var order = new Order(store_id, menu, null)
-            var valid_email = 'npmtester@gmail.com'
-            var valid_password = "npmtester"
-            var user = new User()
-            var store = new Store()
-            user.login(valid_email, valid_password, function (err, response) {
-                expect(err).to.be.null
-                order.setUser(user)
-                order.findAddress("86A constable street", function (err, response) {
-                    expect(err).to.be.null
-                    var address_response = response[0]
-                    order.setAddress(address_response, function (err, response) {
-                        expect(err).to.be.null
-                        expect(response.length).greaterThan(0)
-                        done()
-                    })
-                })
-            })
-        })
-    })
 })
