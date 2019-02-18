@@ -6,12 +6,14 @@ var geolib = require('geolib')
 var util = require('./util/util')
 
 class Store {
+
     constructor() {
         this.region_list = region.region_list
     }
+
     /**
     * Gets all stores.
-    * @param {Function} callback - The callback that handles the response
+    * @param {Function} callback - The callback that handles the response.
     */
     getAllStores(callback) {
         httpJson.get(url.stores.region, function (err, response) {
@@ -24,8 +26,8 @@ class Store {
 
     /**
     * Gets all stores in a single region.
-    * @param {string} region - The region in which you wish to find stores. All valid regions can be found at Store.region_list
-    * @param {Function} callback - The callback that handles the response
+    * @param {string} region - The region in which you wish to find stores. All valid regions can be found at Store.region_list.
+    * @param {Function} callback - The callback that handles the response.
     */
     getSingleRegionStores(region, callback) {
         if (!region)
@@ -48,7 +50,7 @@ class Store {
     /**
     * Gets all serviceable stores near a location.
     * @param {string} location_hash - The hash returned by the API when given a valid location address.
-    * @param {Function} callback - The callback that handles the response
+    * @param {Function} callback - The callback that handles the response.
     */
     getServiceableStores(location_hash, callback) {
         if (!location_hash) return callback(codes.error.no_provided_hash)
@@ -62,12 +64,12 @@ class Store {
             return callback(null, result)
         })
     }
-    
+
     /**
     * Gets the nearest store to a location.
-    * @param {number} lat - The location latitude
-    * @param {number} lng - The location longitude
-    * @param {Function} callback - The callback that handles the response
+    * @param {number} lat - The location latitude.
+    * @param {number} lng - The location longitude.
+    * @param {Function} callback - The callback that handles the response.
     */
     getNearestStore(lat, lng, callback) {
         if (!lat || !lng)
@@ -99,7 +101,6 @@ class Store {
             return callback(null, nearest.store)
         })
     }
-    //getTopNearestStores
 }
 
 module.exports = Store

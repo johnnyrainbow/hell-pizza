@@ -5,6 +5,7 @@ var util = require('./util/util')
 var codes = require('./json/codes.json')
 
 class User {
+
     constructor() { }
 
     /**
@@ -48,7 +49,7 @@ class User {
     * @param {string} first_name - The first name you wish to be associated with your account.
     * @param {string} password - The password you wish to be associated with your account.
     * @param {string} phone_number - The phone number you wish to be associated with your account.
-    * @param {Function} callback - The callback that handles the response
+    * @param {Function} callback - The callback that handles the response.
     */
     register(email, first_name, password, phone_number, callback) {
         if (!email || !first_name || !password || !phone_number)
@@ -63,7 +64,7 @@ class User {
     /**
     * Get all address suggestions for an input address.
     * @param {string} address_query - The address input query.
-    * @param {Function} callback - The callback that handles the response
+    * @param {Function} callback - The callback that handles the response.
     */
     findAddress(address_query, callback) {
         if (!address_query || address_query == '')
@@ -77,35 +78,6 @@ class User {
             return callback(null, result)
         })
     }
-
-    // setAddress(address_response, customer_id, callback) {
-    //     if (!address_response)
-    //         return callback(status.error.no_provided_address)
-
-    //     if (!customer_id)
-    //         return callback(status.error.log_in_required)
-
-    //     this.address = address_response
-
-    //     this.location_hash = address_response.location_hash
-    //     var formatted_url = util.formatOrderURL(this, url.order.set_address, { customer_id: customer_id })
-    //     var data = {
-    //         location_id: this.location_hash,
-    //         customer_address_type_id: codes.address_type.RESIDENTIAL,
-    //         notes: "",
-    //         type_data: {},
-    //         customer_id: this.customer_id,
-    //     }
-
-    //     httpJson.post(formatted_url, data, function (err, response) {
-    //         if (err) return callback(err)
-    //         //get order times
-    //         return callback(null, status.success.address_update)
-    //     })
-    // }
-
-
-
 }
 
 module.exports = User

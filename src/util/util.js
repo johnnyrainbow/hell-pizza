@@ -1,5 +1,4 @@
 module.exports = {
-
     /**
     * Configure the data object for a request.
     * @param {Object} options - The options values that you wish to be updated.
@@ -17,7 +16,7 @@ module.exports = {
         }
         return data
     },
-    
+
     /**
      * Format the URL for store based requests.
      * @param {Object} options - The options values that you wish to insert.

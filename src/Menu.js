@@ -2,6 +2,7 @@ var url = require('./json/urls.json')
 var httpJson = require('./request/request')
 
 class Menu {
+
     constructor() {
         //the hell pizza api does not categorize their foods on the API, 
         //therefore we will define categories by ranges.
@@ -15,15 +16,15 @@ class Menu {
 
     /**
     * Gets all items on the menu.
-    * @param {Function} callback - The callback that handles the response
+    * @param {Function} callback - The callback that handles the response.
     */
-    getMenuItems(callback) { //gets storewide menu
+    getMenuItems(callback) { 
         this.rangeRequest(null, callback)
     }
 
     /**
     * Gets all pizzas on the menu.
-    * @param {Function} callback - The callback that handles the response
+    * @param {Function} callback - The callback that handles the response.
     */
     getPizzas(callback) {
         this.rangeRequest(this.pizza_id_range, callback)
@@ -31,7 +32,7 @@ class Menu {
 
     /**
     * Gets all sides on the menu.
-    * @param {Function} callback - The callback that handles the response
+    * @param {Function} callback - The callback that handles the response.
     */
     getSides(callback) {
         this.rangeRequest(this.sides_id_range, callback)
@@ -39,7 +40,7 @@ class Menu {
 
     /**
     * Gets all salads on the menu.
-    * @param {Function} callback - The callback that handles the response
+    * @param {Function} callback - The callback that handles the response.
     */
     getSalads(callback) {
         this.rangeRequest(this.salads_id_range, callback)
@@ -47,7 +48,7 @@ class Menu {
 
     /**
     * Gets all desserts on the menu.
-    * @param {Function} callback - The callback that handles the response
+    * @param {Function} callback - The callback that handles the response.
     */
     getDesserts(callback) {
         this.rangeRequest(this.dessert_id_range, callback)
@@ -55,7 +56,7 @@ class Menu {
 
     /**
     * Gets all soft drinks on the menu.
-    * @param {Function} callback - The callback that handles the response
+    * @param {Function} callback - The callback that handles the response.
     */
     getSoftDrinks(callback) {
         this.rangeRequest(this.soft_drinks_id_range, callback)
@@ -63,7 +64,7 @@ class Menu {
 
     /**
     * Gets all alcoholic drinks on the menu.
-    * @param {Function} callback - The callback that handles the response
+    * @param {Function} callback - The callback that handles the response.
     */
     getAlcoholicDrinks(callback) {
         this.rangeRequest(this.alcoholic_drinks_id_range, callback)
@@ -71,8 +72,8 @@ class Menu {
 
     /**
     * Makes a range request the menu.
-    * @param {Object} range - The range of item_ids of a category, requires range.min & range.max
-    * @param {Function} callback - The callback that handles the response
+    * @param {Object} range - The number minmax range of item_ids of a category.
+    * @param {Function} callback - The callback that handles the response.
     */
     rangeRequest(range, callback) {
         httpJson.get(url.menu.full_menu, function (err, response) {
