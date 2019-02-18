@@ -7,7 +7,7 @@ describe('Store', function () {
     describe('CheckAllRegionStores', function () {
         it('should check if stores request is functional', function (done) {
             var store = new Store()
-            store.getAllRegionStores(function (err, response) {
+            store.getAllStores(function (err, response) {
                 expect(err).to.be.null
                 expect(response).not.to.be.null
                 expect(response.length).greaterThan(0)
@@ -41,21 +41,6 @@ describe('Store', function () {
                     expect(response.length).greaterThan(0)
                     done()
                 })
-            })
-        })
-    })
-
-    describe('GetNearestStore', function () {
-        it('should check given a provided lat/lng, which store is nearest', function (done) {
-            var store = new Store()
-            var lat = -41.312241 //use Wellington, based lat lng to test
-            var lng = 174.780466
-            var expected_nearest_store = 'Hataitai'
-            store.getNearestStore(lat, lng, function (err, response) {
-                expect(err).to.be.null
-                expect(response).not.to.be.null
-                expect(response.name).to.equal(expected_nearest_store) //closest store for test lat lng
-                done()
             })
         })
     })

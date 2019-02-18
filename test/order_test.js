@@ -43,7 +43,7 @@ describe('Order', function () {
         })
     })
 
-    describe('CheckremoveItem', function () {
+    describe('CheckRemoveItem', function () {
         it('should attempt to remove an item from order', function (done) {
             var store_id = 1
             var order_type_id = 1
@@ -80,43 +80,7 @@ describe('Order', function () {
             });
         })
     })
-    describe('CheckremoveItem', function () {
-        it('should attempt to remove an item from order', function (done) {
-            var store_id = 1
-            var order_type_id = 1
-            var order = new Order()
-            var item_id = 5
-            var item_quantity = 1
-            var item_size_id = 3
-            var token
-            var items
-            async.series([
-                function (callback) {
-                    order.initOrder(order_type_id, store_id, function (err, response) {
-                        token = response.token
-                        callback(err, response)
-                    })
-                },
-                function (callback) {
-                    order.addItem(token, item_id, item_size_id, item_quantity, {}, '', function (err, response) {
-                        items = response.items
-                        callback(err, response)
-                    })
-                },
-                function (callback) {
-                    order.removeItem(token, items[0].order_item_id, function (err, response) {
-                        items = response.items
-                        callback(err, response)
-                    })
-                }
-            ], function (err, results) {
-                expect(err).to.be.null
-                expect(results.length).to.equal(3)
-                expect(items.length).to.equal(0)
-                done()
-            });
-        })
-    })
+
     describe('CheckUpdateOrderStoreId', function () {
         it('should attempt to update the order store ID', function (done) {
             var new_store_id = 21
