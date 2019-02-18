@@ -1,6 +1,6 @@
 # hell-pizza-api-wrapper
 
-A node.js wrapper for the Hell Pizza API. 
+A node.js wrapper for the New Zealand based Hell Pizza API. 
 
 ## Installation
 
@@ -10,6 +10,8 @@ npm install --save hell-pizza-api
 
 ## Testing
 Run `npm test`
+
+
 
 # Menu
 
