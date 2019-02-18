@@ -214,25 +214,28 @@ class Order {
         })
     }
 
-    //rework this
-    placeOrder(payment_type, callback) {
-        if (!this.user)
-            return callback(status.error.no_provided_user)
+    /**
+    * Places an order. 
+    * @param {string} token - The order token.
+    * @param {string} store_payment_type_id - The chosen payment_type_id unique to the store you have chosen. NOTE currently does not support pay with card. Only pay with cash delivery and pay on pickup.
+    * @param {Function} callback - The callback that handles the response.
+    */
+    placeOrder(token, store_payment_type_id, callback) {
+        if (!store_payment_type_id)
+            return callback(status.error.no_provided_store_payment_id)
 
-        if (!this.address)
-            return callback(status.error.no_provided_address)
+        if (!token)
+            return callback(status.error.missing_token)
 
         var formatted_url = util.formatOrderURL(url.order.place, { token: token })
         var data = {
-            order_token: this.token,
-            store_payment_type_id: payment_type
+            order_token: token,
+            store_payment_type_id: no_provided_store_payment_id
         }
         httpJson.post(formatted_url, data, function (err, response) {
             if (err) return callback(err)
 
             return callback(response)
-
-            //TODO
         })
     }
 }

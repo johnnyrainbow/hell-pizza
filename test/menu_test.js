@@ -54,6 +54,7 @@ describe('Menu', function () {
                 expect(err).to.be.null
                 expect(response).not.to.be.null;
                 expect(response.items.length).greaterThan(0)
+                console.log(response.store_info.payment_types)
                 done()
             })
         })
