@@ -5,7 +5,7 @@ var codes = require('./json/codes.json')
 var util = require('./util/util')
 
 class Order {
-    
+
     constructor() {
         this.menu_id = 1
     }
@@ -52,16 +52,18 @@ class Order {
      * @param {number} item_id - The item id.
      * @param {number} item_size_id - Item sizes: 2 = small 3 = large
      * @param {number} item_quantity - The quantity of the item you wish to add.
-     * @param {Object} [modifiers] - The optional modifier parameters of an order.
-     * @param {string} [notes] - The optional notes for the item you are adding.
+     * @param {Object} modifiers- The modifier parameters of an order.
+     * @param {string} notes - The notes for the item you are adding.
      * @param {Function} callback - The callback that handles the response.
      */
     addItem(token, item_id, item_size_id, item_quantity, modifiers, notes, callback) {
+        if (!token)
+            return callback(status.error.missing_token)
+
         if (!item_id || !item_size_id || !item_quantity)
             return callback(status.error.missing_item_params)
 
-        if (!token)
-            return callback(status.error.missing_token)
+
 
         var formatted_url = util.formatOrderURL(url.order.add_item, { token: token })
         var data = {
@@ -106,6 +108,7 @@ class Order {
     * Updates an order's store ID.
     * @param {string} token - The order token.
     * @param {number} order_id - The id of the order you wish to update.
+    * @param {number} store_id - The id of the store you wish to use.
     * @param {Function} callback - The callback that handles the response.
     */
     updateStoreId(token, order_id, store_id, callback) {
@@ -122,6 +125,7 @@ class Order {
       * Updates an order's pickup/delivery time.
       * @param {string} token - The order token.
       * @param {number} order_id - The id of the order you wish to update.
+      * @param {number} new_time - The new pickup/delivery time of the order you wish to update for.
       * @param {Function} callback - The callback that handles the response.
       */
     updateCollectionTime(token, order_id, new_time, callback) {
@@ -138,6 +142,7 @@ class Order {
       * Updates an order's collection type (pickup/delivery).
       * @param {string} token - The order token.
       * @param {number} order_id - The id of the order you wish to update.
+      * @param {number} type - The type (Pickup = 1 Delivery = 2).
       * @param {Function} callback - The callback that handles the response.
       */
     updateCollectionType(token, order_id, type, callback) {
