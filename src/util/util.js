@@ -17,6 +17,7 @@ module.exports = {
         return data
     },
 
+
     /**
      * Format the URL for store based requests.
      * @param {Object} options - The options values that you wish to insert.

@@ -61,7 +61,7 @@ class User {
             return callback(null, result)
         })
     }
-    
+
     /**
     * Get all address suggestions for an input address.
     * @param {string} address_query - The address input query.

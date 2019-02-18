@@ -12,7 +12,8 @@
     },
     "payment_type": {
         "CASH_ON_DELIVERY": 41,
-        "PAY_WITH_CARD_DELIVERY": 43
+        "PAY_WITH_CARD_DELIVERY": 43,
+        "CASH_ON_PICKUP":96
     },
     "address_type": {
         "RESIDENTIAL": 1

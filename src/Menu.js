@@ -1,5 +1,7 @@
 var url = require('./json/urls.json')
 var httpJson = require('./request/request')
+var status = require('./json/status_codes.json')
+var util = require('./util/util')
 
 class Menu {
 
@@ -16,67 +18,79 @@ class Menu {
 
     /**
     * Gets all items on the menu.
+    * @param {number} store_id - The store_id you wish to order from.
     * @param {Function} callback - The callback that handles the response.
     */
-    getMenuItems(callback) { 
-        this.rangeRequest(null, callback)
+    getMenuItems(store_id, callback) {
+        this.rangeRequest(store_id, null, callback)
     }
 
     /**
     * Gets all pizzas on the menu.
+    * @param {number} store_id - The store_id you wish to order from.
     * @param {Function} callback - The callback that handles the response.
     */
-    getPizzas(callback) {
-        this.rangeRequest(this.pizza_id_range, callback)
+    getPizzas(store_id, callback) {
+        this.rangeRequest(store_id, this.pizza_id_range, callback)
     }
 
     /**
     * Gets all sides on the menu.
+    * @param {number} store_id - The store_id you wish to order from.
     * @param {Function} callback - The callback that handles the response.
     */
-    getSides(callback) {
-        this.rangeRequest(this.sides_id_range, callback)
+    getSides(store_id, callback) {
+        this.rangeRequest(store_id, this.sides_id_range, callback)
     }
 
     /**
     * Gets all salads on the menu.
+    * @param {number} store_id - The store_id you wish to order from.
     * @param {Function} callback - The callback that handles the response.
     */
-    getSalads(callback) {
-        this.rangeRequest(this.salads_id_range, callback)
+    getSalads(store_id, callback) {
+        this.rangeRequest(store_id, this.salads_id_range, callback)
     }
 
     /**
     * Gets all desserts on the menu.
+    * @param {number} store_id - The store_id you wish to order from.
     * @param {Function} callback - The callback that handles the response.
     */
-    getDesserts(callback) {
-        this.rangeRequest(this.dessert_id_range, callback)
+    getDesserts(store_id, callback) {
+        this.rangeRequest(store_id, this.dessert_id_range, callback)
     }
 
     /**
     * Gets all soft drinks on the menu.
+    * @param {number} store_id - The store_id you wish to order from.
     * @param {Function} callback - The callback that handles the response.
     */
-    getSoftDrinks(callback) {
-        this.rangeRequest(this.soft_drinks_id_range, callback)
+    getSoftDrinks(store_id, callback) {
+        this.rangeRequest(store_id, this.soft_drinks_id_range, callback)
     }
 
     /**
     * Gets all alcoholic drinks on the menu.
+    * @param {number} store_id - The store_id you wish to order from.
     * @param {Function} callback - The callback that handles the response.
     */
-    getAlcoholicDrinks(callback) {
-        this.rangeRequest(this.alcoholic_drinks_id_range, callback)
+    getAlcoholicDrinks(store_id, callback) {
+        this.rangeRequest(store_id, this.alcoholic_drinks_id_range, callback)
     }
 
     /**
     * Makes a range request the menu.
+    * @param {number} store_id - The store_id you wish to order from.
     * @param {Object} range - The number minmax range of item_ids of a category.
     * @param {Function} callback - The callback that handles the response.
     */
-    rangeRequest(range, callback) {
-        httpJson.get(url.menu.full_menu, function (err, response) {
+    rangeRequest(store_id, range, callback) {
+        if (!store_id)
+            return callback(status.error.no_provided_store_id)
+
+        var formatted_url = util.formatStoreURL(url.menu.full_menu, { store_id: store_id })
+        httpJson.get(formatted_url, function (err, response) {
             if (err) return callback(err)
 
             var result = response.payload.menu.items
@@ -85,7 +99,7 @@ class Menu {
                     return obj.item_id >= range.min && obj.item_id <= range.max
                 })
             }
-            return callback(null, result)
+            return callback(null, { items: result, store_info: response.payload.store })
         })
     }
 }

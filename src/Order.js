@@ -1,7 +1,6 @@
 var url = require('./json/urls.json')
 var status = require('./json/status_codes.json')
 var httpJson = require('./request/request')
-var codes = require('./json/codes.json')
 var util = require('./util/util')
 
 class Order {
@@ -125,7 +124,7 @@ class Order {
       * Updates an order's pickup/delivery time.
       * @param {string} token - The order token.
       * @param {number} order_id - The id of the order you wish to update.
-      * @param {number} new_time - The new pickup/delivery time of the order you wish to update for.
+      * @param {number} new_time - The new pickup/delivery time (UTC) of the order you wish to update for.
       * @param {Function} callback - The callback that handles the response.
       */
     updateCollectionTime(token, order_id, new_time, callback) {
@@ -223,7 +222,7 @@ class Order {
         if (!this.address)
             return callback(status.error.no_provided_address)
 
-        var formatted_url = util.formatOrderURL(this, url.order.place)
+        var formatted_url = util.formatOrderURL(url.order.place, { token: token })
         var data = {
             order_token: this.token,
             store_payment_type_id: payment_type

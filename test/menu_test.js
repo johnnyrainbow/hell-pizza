@@ -8,10 +8,11 @@ describe('Menu', function () {
         it('should check if the menu contains a different number of items', function (done) {
             this.timeout(5000) //longer timeout as hell's server can be slow for large requests
             var menu = new Menu()
-            menu.getMenuItems(function (err, response) {
+            var store_id = 1
+            menu.getMenuItems(store_id, function (err, response) {
                 expect(err).to.be.null
                 expect(response).not.to.be.null
-                expect(response.length).to.equal(total_menu_size)
+                expect(response.items.length).to.equal(total_menu_size)
                 done()
             })
         })
@@ -20,10 +21,11 @@ describe('Menu', function () {
         it('should check all menu responses', function (done) {
             this.timeout(5000) //longer timeout as hell's server can be slow for large requests
             var menu = new Menu()
-            menu.getMenuItems(function (err, response) {
+            var store_id = 1
+            menu.getMenuItems(store_id, function (err, response) {
                 expect(err).to.be.null
                 expect(response).not.to.be.null
-                expect(response.length).greaterThan(0)
+                expect(response.items.length).greaterThan(0)
                 done()
             })
         })
@@ -32,12 +34,12 @@ describe('Menu', function () {
     describe('PizzaMenu', function () {
         it('should check get all pizza menu items', function (done) {
             this.timeout(5000) //longer timeout as hell's server can be slow for large requests
-
+            var store_id = 1
             var menu = new Menu()
-            menu.getPizzas(function (err, response) {
+            menu.getPizzas(store_id, function (err, response) {
                 expect(err).to.be.null
                 expect(response).not.to.be.null
-                expect(response.length).greaterThan(0)
+                expect(response.items.length).greaterThan(0)
                 done()
             })
         })
@@ -46,12 +48,12 @@ describe('Menu', function () {
     describe('SidesMenu', function () {
         it('should check get sides menu items', function (done) {
             this.timeout(5000) //longer timeout as hell's server can be slow for large requests
-
+            var store_id = 1
             var menu = new Menu()
-            menu.getSides(function (err, response) {
+            menu.getSides(store_id, function (err, response) {
                 expect(err).to.be.null
                 expect(response).not.to.be.null;
-                expect(response.length).greaterThan(0)
+                expect(response.items.length).greaterThan(0)
                 done()
             })
         })
@@ -59,12 +61,12 @@ describe('Menu', function () {
     describe('DessertMenu', function () {
         it('should check get all dessert menu items', function (done) {
             this.timeout(5000) //longer timeout as hell's server can be slow for large requests
-
+            var store_id = 1
             var menu = new Menu()
-            menu.getDesserts(function (err, response) {
+            menu.getDesserts(store_id, function (err, response) {
                 expect(err).to.be.null
                 expect(response).not.to.be.null
-                expect(response.length).greaterThan(0)
+                expect(response.items.length).greaterThan(0)
                 done()
             })
         })
@@ -72,12 +74,12 @@ describe('Menu', function () {
     describe('SaladMenu', function () {
         it('should check get all salad menu items', function (done) {
             this.timeout(5000) //longer timeout as hell's server can be slow for large requests
-
+            var store_id = 1
             var menu = new Menu()
-            menu.getSalads(function (err, response) {
+            menu.getSalads(store_id, function (err, response) {
                 expect(err).to.be.null
                 expect(response).not.to.be.null
-                expect(response.length).greaterThan(0)
+                expect(response.items.length).greaterThan(0)
                 done()
             })
 
@@ -86,12 +88,12 @@ describe('Menu', function () {
     describe('SoftDrinkMenu', function () {
         it('should check get soft drink menu items', function (done) {
             this.timeout(5000) //longer timeout as hell's server can be slow for large requests
-
+            var store_id = 1
             var menu = new Menu()
-            menu.getSoftDrinks(function (err, response) {
+            menu.getSoftDrinks(store_id, function (err, response) {
                 expect(err).to.be.null
                 expect(response).not.to.be.null;
-                expect(response.length).greaterThan(0)
+                expect(response.items.length).greaterThan(0)
                 done()
             })
         })
@@ -99,12 +101,12 @@ describe('Menu', function () {
     describe('AlcoholicDrinkMenu', function () {
         it('should check get alcoholic drink menu items', function (done) {
             this.timeout(5000) //longer timeout as hell's server can be slow for large requests
-
+            var store_id = 1
             var menu = new Menu()
-            menu.getAlcoholicDrinks(function (err, response) {
+            menu.getAlcoholicDrinks(store_id, function (err, response) {
                 expect(err).to.be.null
                 expect(response).not.to.be.null
-                expect(response.length).greaterThan(0)
+                expect(response.items.length).greaterThan(0)
                 done()
             })
         })
