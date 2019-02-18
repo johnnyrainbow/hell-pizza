@@ -11,7 +11,7 @@ npm install --save hell-pizza-api
 ## Testing
 Run `npm test`
 
-## Menu
+# Menu
 
 ### Example
 ```javascript
@@ -52,7 +52,7 @@ Gets all alcoholic drinks on the menu.
 
 
 
-## User
+# User
 
 ### Example
 ```javascript
@@ -83,7 +83,7 @@ Gets all formatted addresses for an address query. Formatted addresses contain l
 
 
 
-## Store
+# Store
 
 ### Example
 ```javascript
@@ -141,7 +141,7 @@ Gets nearest store from provided lat lng location.
 
 
 
-## Order
+# Order
 
 ### Example
 ```javascript
