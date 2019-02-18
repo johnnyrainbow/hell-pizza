@@ -9,6 +9,12 @@ class Order {
         this.menu_id = 1
     }
 
+    /**
+     * Instantiates an order.
+     * @param {number} order_type_id - The type of collection. Pickup = 1  Delivery = 2.
+     * @param {number} store_id - The store_id
+     * @param {Function} callback - The callback that handles the response
+     */
     initOrder(order_type_id, store_id, callback) {
         var data = {
             menu_id: this.menu_id,
@@ -24,8 +30,12 @@ class Order {
         })
     }
 
+    /**
+     * Gets an order from provided token.
+     * @param {string} token - The order token.
+     * @param {Function} callback - The callback that handles the response.
+     */
     getOrder(token, callback) {
-        //retrieve our current order from hell api
         var formatted_url = util.formatOrderURL(url.order.get_order, { token: token })
         httpJson.get(formatted_url, function (err, response) {
             if (err) return callback(err)
@@ -35,7 +45,17 @@ class Order {
         })
     }
 
-    addItemToOrder(token, item_id, item_size_id, item_quantity, modifiers, notes, callback) {
+    /**
+     * Adds an item to existing order.
+     * @param {string} token - The order token.
+     * @param {number} item_id - The item id
+     * @param {number} item_size_id - Item sizes: 2 = small 3 = large
+     * @param {number} item_quantity - The quantity of the item you wish to add.
+     * @param {Object} [modifiers] - The optional modifier parameters of an order.
+     * @param {string} [notes] - The optional notes for the item you are adding.
+     * @param {Function} callback - The callback that handles the response.
+     */
+    addItem(token, item_id, item_size_id, item_quantity, modifiers, notes, callback) {
         if (!item_id || !item_size_id || !item_quantity)
             return callback(status.error.missing_item_params)
 
@@ -59,7 +79,13 @@ class Order {
         })
     }
 
-    removeItemFromOrder(token, order_item_id, callback) {
+    /**
+     * Removes an item from an existing order.
+     * @param {string} token - The order token.
+     * @param {number} order_item_id - The identifier of the item in its respective order
+     * @param {Function} callback - The callback that handles the response
+     */
+    removeItem(token, order_item_id, callback) {
         if (!token)
             return callback(status.error.missing_token)
 
@@ -75,38 +101,62 @@ class Order {
             return callback(null, result)
         })
     }
-
-    updateOrderStoreId(token, order_id, store_id, callback) {
+    /**
+    * Updates an order's store ID.
+    * @param {string} token - The order token.
+    * @param {number} order_id - The id of the order you wish to update
+    * @param {Function} callback - The callback that handles the response
+    */
+    updateStoreId(token, order_id, store_id, callback) {
         if (!order_id) return callback(status.error.no_provided_time)
 
         if (!token || !order_id)
             return callback(status.error.missing_token)
 
         var data = util.configureUpdateData({ store_id: store_id })
-        this.updateOrder(token, order_id, data, callback)
+        this.update(token, order_id, data, callback)
     }
 
-    updateOrderCollectionTime(token, order_id, new_time, callback) {
+    /**
+      * Updates an order's pickup/delivery time.
+      * @param {string} token - The order token.
+      * @param {number} order_id - The id of the order you wish to update
+      * @param {Function} callback - The callback that handles the response
+      */
+    updateCollectionTime(token, order_id, new_time, callback) {
         if (!new_time) return callback(status.error.no_provided_time)
 
         if (!token || !order_id)
             return callback(status.error.missing_token)
 
         var data = util.configureUpdateData({ time_scheduled: new_time })
-        this.updateOrder(token, order_id, data, callback)
+        this.update(token, order_id, data, callback)
     }
 
-    updateOrderCollectionType(token, order_id, type, callback) {
+    /**
+      * Updates an order's collection type (pickup/delivery).
+      * @param {string} token - The order token.
+      * @param {number} order_id - The id of the order you wish to update
+      * @param {Function} callback - The callback that handles the response
+      */
+    updateCollectionType(token, order_id, type, callback) {
         if (!type) return callback(status.error.no_provided_type)
 
         if (!token || !order_id)
             return callback(status.error.missing_token)
 
         var data = util.configureUpdateData({ order_type_id: type })
-        this.updateOrder(token, order_id, data, callback)
+        this.update(token, order_id, data, callback)
     }
 
-    updateOrder(token, order_id, data, callback) {
+    /**
+      * Updates an order.
+      * @param {string} token - The order token.
+      * @param {number} order_id - The id of the order you wish to update
+      * @param {Object} data - The updatable data parameters.
+      * @param {Function} callback - The callback that handles the response
+      */
+    update(token, order_id, data, callback) {
         var formatted_url = util.formatOrderURL(url.order.update_order, { token: token, order_id: order_id })
 
         httpJson.post(formatted_url, data, function (err, response) {
@@ -117,6 +167,12 @@ class Order {
         })
     }
 
+    /**
+     * Applies a voucher code to an order.
+     * @param {string} token - The order token.
+     * @param {string} voucher_code - The voucher code you wish to apply
+     * @param {Function} callback - The callback that handles the response
+     */
     applyVoucherCode(token, voucher_code, callback) {
         if (!token)
             return callback(status.error.missing_token)
@@ -137,6 +193,11 @@ class Order {
         })
     }
 
+    /**
+    * Clears the voucher code for an order.
+    * @param {string} token - The order token.
+    * @param {Function} callback - The callback that handles the response
+    */
     clearVoucherCode(token, callback) {
         var formatted_url = util.formatOrderURL(url.order.voucher_code, { token: token })
 

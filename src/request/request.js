@@ -1,7 +1,7 @@
 var http = require('request')
 var requestFormatter = require('./request_formatter')
-var status = require('../json/status_codes.json')
 var auth = require('../json/auth.json')
+
 module.exports.post = function (url, req, callback) {
 
     if (typeof req != 'string')

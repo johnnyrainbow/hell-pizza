@@ -21,7 +21,7 @@ describe('Order', function () {
         })
     })
 
-    describe('CheckAddItemToOrder', function () {
+    describe('CheckaddItem', function () {
         it('should attempt to add item to order', function (done) {
             var store_id = 1
             var order_type_id = 1
@@ -32,7 +32,7 @@ describe('Order', function () {
 
             order.initOrder(order_type_id, store_id, function (err, response) {
                 expect(err).to.be.null
-                order.addItemToOrder(response.token, item_id, item_size_id, item_quantity, {}, '', function (err, response) {
+                order.addItem(response.token, item_id, item_size_id, item_quantity, {}, '', function (err, response) {
                     expect(err).to.be.null
                     expect(response).to.exist
                     expect(response.items.length).to.equal(1)
@@ -43,7 +43,7 @@ describe('Order', function () {
         })
     })
 
-    describe('CheckRemoveItemFromOrder', function () {
+    describe('CheckremoveItem', function () {
         it('should attempt to remove an item from order', function (done) {
             var store_id = 1
             var order_type_id = 1
@@ -61,13 +61,13 @@ describe('Order', function () {
                     })
                 },
                 function (callback) {
-                    order.addItemToOrder(token, item_id, item_size_id, item_quantity, {}, '', function (err, response) {
+                    order.addItem(token, item_id, item_size_id, item_quantity, {}, '', function (err, response) {
                         items = response.items
                         callback(err, response)
                     })
                 },
                 function (callback) {
-                    order.removeItemFromOrder(token, items[0].order_item_id, function (err, response) {
+                    order.removeItem(token, items[0].order_item_id, function (err, response) {
                         items = response.items
                         callback(err, response)
                     })
@@ -80,7 +80,7 @@ describe('Order', function () {
             });
         })
     })
-    describe('CheckRemoveItemFromOrder', function () {
+    describe('CheckremoveItem', function () {
         it('should attempt to remove an item from order', function (done) {
             var store_id = 1
             var order_type_id = 1
@@ -98,13 +98,13 @@ describe('Order', function () {
                     })
                 },
                 function (callback) {
-                    order.addItemToOrder(token, item_id, item_size_id, item_quantity, {}, '', function (err, response) {
+                    order.addItem(token, item_id, item_size_id, item_quantity, {}, '', function (err, response) {
                         items = response.items
                         callback(err, response)
                     })
                 },
                 function (callback) {
-                    order.removeItemFromOrder(token, items[0].order_item_id, function (err, response) {
+                    order.removeItem(token, items[0].order_item_id, function (err, response) {
                         items = response.items
                         callback(err, response)
                     })
@@ -126,7 +126,7 @@ describe('Order', function () {
             order.initOrder(order_type_id, new_store_id, function (err, response) {
                 expect(err).to.be.null
 
-                order.updateOrderStoreId(response.token, response.order_id, new_store_id, function (err, response) {
+                order.updateStoreId(response.token, response.order_id, new_store_id, function (err, response) {
                     expect(err).to.be.null
                     expect(response).not.to.be.null
                     expect(response.store_id).to.equal(new_store_id)
@@ -144,7 +144,7 @@ describe('Order', function () {
             order.initOrder(order_type_id, new_store_id, function (err, response) {
                 expect(err).to.be.null
 
-                order.updateOrderStoreId(response.token, response.order_id, new_store_id, function (err, response) {
+                order.updateStoreId(response.token, response.order_id, new_store_id, function (err, response) {
                     expect(err).to.be.null
 
                     order.getOrder(response.token, function (err, response) {
@@ -166,7 +166,7 @@ describe('Order', function () {
             order.initOrder(order_type_id, store_id, function (err, response) {
                 expect(err).to.be.null
 
-                order.updateOrderCollectionType(response.token, response.order_id, codes.order_type.DELIVERY, function (err, response) {
+                order.updateCollectionType(response.token, response.order_id, codes.order_type.DELIVERY, function (err, response) {
                     expect(err).to.be.null
                     expect(response).not.to.be.null
                     expect(response.order_type_id).to.equal(codes.order_type.DELIVERY)
@@ -183,7 +183,7 @@ describe('Order', function () {
             order.initOrder(order_type_id, store_id, function (err, response) {
                 expect(err).to.be.null
 
-                order.updateOrderCollectionType(response.token, response.order_id, codes.order_type.PICKUP, function (err, response) {
+                order.updateCollectionType(response.token, response.order_id, codes.order_type.PICKUP, function (err, response) {
                     expect(err).to.be.null
                     expect(response).not.to.be.null
                     expect(response.order_type_id).to.equal(codes.order_type.PICKUP)
@@ -211,13 +211,13 @@ describe('Order', function () {
                     })
                 },
                 function (callback) {
-                    order.addItemToOrder(token, 5, 3, 2, {}, '', function (err, response) {
+                    order.addItem(token, 5, 3, 2, {}, '', function (err, response) {
                         p1 = response.total_price
                         callback(err, response)
                     })
                 },
                 function (callback) {
-                    order.addItemToOrder(token, 42, 1, 1, {}, '', function (err, response) {
+                    order.addItem(token, 42, 1, 1, {}, '', function (err, response) {
                         callback(err, response)
                     })
                 },
@@ -251,12 +251,12 @@ describe('Order', function () {
                     })
                 },
                 function (callback) {
-                    order.addItemToOrder(token, 5, 3, 2, {}, '', function (err, response) {
+                    order.addItem(token, 5, 3, 2, {}, '', function (err, response) {
                         callback(err, response)
                     })
                 },
                 function (callback) {
-                    order.addItemToOrder(token, 42, 1, 1, {}, '', function (err, response) {
+                    order.addItem(token, 42, 1, 1, {}, '', function (err, response) {
                         p1 = response.total_price
                         callback(err, response)
                     })

@@ -1,5 +1,9 @@
 module.exports = {
 
+    /**
+    * Configure the data object for a request.
+    * @param {Object} options - The options values that you wish to be updated.
+    */
     configureUpdateData(options) {
         options = options || {}
         var data = {
@@ -13,7 +17,11 @@ module.exports = {
         }
         return data
     },
-
+    
+    /**
+     * Format the URL for store based requests.
+     * @param {Object} options - The options values that you wish to insert.
+     */
     formatStoreURL(url, options) {
         options = options || {}
         return url
@@ -21,6 +29,10 @@ module.exports = {
             .replace('${STORE_ID}', options.store_id)
     },
 
+    /**
+    * Format the URL for user based requests.
+    * @param {Object} options - The options values that you wish to insert.
+    */
     formatUserURL(url, options) {
         options = options || {}
         return url
@@ -29,6 +41,10 @@ module.exports = {
             .replace('${CUSTOMER_ADDRESS_ID}', options.customer_address_id)
     },
 
+    /**
+    * Format the URL for order based requests.
+    * @param {Object} options - The options values that you wish to insert.
+    */
     formatOrderURL(url, options) {
         options = options || {}
         return url
