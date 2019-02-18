@@ -3,14 +3,15 @@
 A node.js wrapper for the Hell's Pizza API.
 
 <h4>Installation</h4>
-```npm install --save hell-pizza-api```
+```
+npm install --save hell-pizza-api
+```
 
 <h4>Basic usage examples</h4>
 
+<h4>Menu</h4>
 ```
 var hellPizza = require('hell-pizza-api')
-
-//MENU
 
 getPizzas(req, res) {
     hellPizza.Menu.getPizzas(function (err, response) {
@@ -18,21 +19,23 @@ getPizzas(req, res) {
 
          //response is an array, contains items in the pizza menu
       })
-    },
+    }
 
+```
 
-//USER
-
+<h4>User</h4>
+```
 login(req, res) {
     hellPizza.User.login(req.body.email, req.body.password, function (err, response) {
         if (err) return res.status(500).send({ error: err })
 
         //response is auth token and other login/auth info
     })
-  },
+  }
+```
 
-//STORE
-
+<h4>STORE</h4>
+```
 findNearestStores(req, res) {
     hellPizza.User.findAddress(req.body.address, function (err, response) {
         if (err) return res.status(500).send({ error: err })
@@ -46,18 +49,21 @@ findNearestStores(req, res) {
            //response contains nearby available stores. Max limit 4.
         })
     })
-},
+}
+```
 
-//ORDER
-
+<h4>ORDER</h4>
+```
 initOrder(req, res) {
       hellPizza.Order.initOrder(req.body.order_type_id, req.body.store_id, function (err, response) {
           if (err) return res.status(500).send({ error: err })
 
           //response contains order_id and order token.
       })
-  },
+  }
+```
 
+```
 addItemToOrder(req, res) {
       //pass through your created order token, the id of the item you wish to add, the applicable size of the item, quantity, and any modifiers or notes.
 
