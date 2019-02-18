@@ -20,13 +20,11 @@ Run `npm test`
 ```javascript
 var hellPizza = require('hell-pizza-api')
 
-getPizzas(req, res) {
     hellPizza.Menu.getPizzas(function (err, response) {
         if (err) //handle err
 
          //response is an array, contains items in the pizza menu
       })
-    }
 ```
 
 ### Methods
@@ -59,13 +57,11 @@ Gets all alcoholic drinks on the menu.
 
 ### Example
 ```javascript
-login(req, res) {
-    hellPizza.User.login(req.body.email, req.body.password, function (err, response) {
+    hellPizza.User.login(email, password, function (err, response) {
         if (err) //handle err
 
         //response contains auth token and other login/auth info
     })
-  }
 ```
 
 ### Methods
@@ -90,8 +86,7 @@ Gets all formatted addresses for an address query. Formatted addresses contain l
 
 ### Example
 ```javascript
-findNearestStores(req, res) {
-    hellPizza.User.findAddress(req.body.address, function (err, response) {
+    hellPizza.User.findAddress(address_query, function (err, response) {
         if (err) //handle err
         
         //response contains valid addresses that match query
@@ -103,7 +98,6 @@ findNearestStores(req, res) {
            //response contains nearby available stores. Max limit 4.
         })
     })
-}
 ```
 
 ### Methods
@@ -148,25 +142,19 @@ Gets nearest store from provided lat lng location.
 
 ### Example
 ```javascript
-initOrder(req, res) {
       hellPizza.Order.initOrder(order_type_id, store_id, function (err, response) {
           if (err) //handle err
 
           //response contains order_id and order token.
       })
-  }
 ```
 
 ```javascript
-addItemToOrder(req, res) {
-      //pass through your created order token, the id of the item you wish to add, the applicable size of the item, quantity, and any modifiers or notes.
-
       hellPizza.Order.addItem(order_token, item_id, item_size_id, item_quantity, modifiers, notes, function (err, response) {
           if (err) //handle err
 
         //response contains your updated order
       })
-  }
 ```
 
 ### Methods
