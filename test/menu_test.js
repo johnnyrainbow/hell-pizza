@@ -6,6 +6,7 @@ const total_menu_size = 206 //amount of items in total menu
 describe('Menu', function () {
     describe('CheckMenuUpdate', function () {
         it('should check if the menu contains a different number of items', function (done) {
+            this.timeout(3000) //longer timeout as hell's server can be slow for large requests
             var menu = new Menu()
             menu.getMenuItems(function (err, response) {
                 expect(err).to.be.null
@@ -17,6 +18,7 @@ describe('Menu', function () {
     })
     describe('FullMenu', function () {
         it('should check all menu responses', function (done) {
+            this.timeout(3000) //longer timeout as hell's server can be slow for large requests
             var menu = new Menu()
             menu.getMenuItems(function (err, response) {
                 expect(err).to.be.null

@@ -1,15 +1,15 @@
 module.exports = {
 
-    configureUpdateData(self, options) {
+    configureUpdateData(options) {
         options = options || {}
         var data = {
-            customer_address_id: options.address || self.address,
+            customer_address_id: options.address,
             location_id: options.location || null,
-            menu_id: self.menu_id,
-            notes: options.notes || self.notes,
-            order_type_id: options.order_type_id || self.order_type_id,
-            store_id: self.store_id,
-            time_scheduled: self.time_scheduled,
+            menu_id: options.menu_id,
+            notes: options.notes,
+            order_type_id: options.order_type_id,
+            store_id: options.store_id,
+            time_scheduled: options.time_scheduled,
         }
         return data
     },

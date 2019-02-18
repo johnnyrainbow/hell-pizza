@@ -13,7 +13,7 @@ class Menu {
         this.alcoholic_drinks_id_range = { min: 108, max: 139 }
     }
 
-    getMenuItems(callback) { //gets entire storewide menu
+    getMenuItems(callback) { //gets storewide menu
         this.rangeRequest(null, callback)
     }
     getPizzas(callback) {
@@ -36,7 +36,6 @@ class Menu {
     }
 
     rangeRequest(range, callback) {
-
         httpJson.get(url.menu.full_menu, function (err, response) {
             if (err) return callback(err)
 

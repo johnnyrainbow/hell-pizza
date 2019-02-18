@@ -23,9 +23,18 @@ class Order {
             return callback(null, result)
         })
     }
-    getOrder(order_token, callback) {
+
+    getOrder(token, callback) {
         //retrieve our current order from hell api
+        var formatted_url = util.formatOrderURL(url.order.get_order, { token: token })
+        httpJson.get(formatted_url, function (err, response) {
+            if (err) return callback(err)
+
+            var result = response.payload
+            return callback(null, result)
+        })
     }
+
     addItemToOrder(token, item_id, item_size_id, item_quantity, modifiers, notes, callback) {
         if (!item_id || !item_size_id || !item_quantity)
             return callback(status.error.missing_item_params)
@@ -67,13 +76,23 @@ class Order {
         })
     }
 
+    updateOrderStoreId(token, order_id, store_id, callback) {
+        if (!order_id) return callback(status.error.no_provided_time)
+
+        if (!token || !order_id)
+            return callback(status.error.missing_token)
+
+        var data = util.configureUpdateData({ store_id: store_id })
+        this.updateOrder(token, order_id, data, callback)
+    }
+
     updateOrderCollectionTime(token, order_id, new_time, callback) {
         if (!new_time) return callback(status.error.no_provided_time)
 
         if (!token || !order_id)
             return callback(status.error.missing_token)
 
-        var data = util.configureUpdateData(this, { time_scheduled: new_time })
+        var data = util.configureUpdateData({ time_scheduled: new_time })
         this.updateOrder(token, order_id, data, callback)
     }
 
@@ -83,7 +102,7 @@ class Order {
         if (!token || !order_id)
             return callback(status.error.missing_token)
 
-        var data = util.configureUpdateData(this, { order_type_id: type })
+        var data = util.configureUpdateData({ order_type_id: type })
         this.updateOrder(token, order_id, data, callback)
     }
 

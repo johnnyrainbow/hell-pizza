@@ -1,10 +1,6 @@
 var chai = require('chai');
 var expect = chai.expect;
 var Order = require('../src/Order')
-var User = require('../src/User')
-var Store = require('../src/Store')
-
-var Menu = require('../src/Menu')
 var async = require('async')
 var codes = require('../src/json/codes.json')
 const voucher = 'WELLY25WEDGES'
@@ -84,8 +80,84 @@ describe('Order', function () {
             });
         })
     })
+    describe('CheckRemoveItemFromOrder', function () {
+        it('should attempt to remove an item from order', function (done) {
+            var store_id = 1
+            var order_type_id = 1
+            var order = new Order()
+            var item_id = 5
+            var item_quantity = 1
+            var item_size_id = 3
+            var token
+            var items
+            async.series([
+                function (callback) {
+                    order.initOrder(order_type_id, store_id, function (err, response) {
+                        token = response.token
+                        callback(err, response)
+                    })
+                },
+                function (callback) {
+                    order.addItemToOrder(token, item_id, item_size_id, item_quantity, {}, '', function (err, response) {
+                        items = response.items
+                        callback(err, response)
+                    })
+                },
+                function (callback) {
+                    order.removeItemFromOrder(token, items[0].order_item_id, function (err, response) {
+                        items = response.items
+                        callback(err, response)
+                    })
+                }
+            ], function (err, results) {
+                expect(err).to.be.null
+                expect(results.length).to.equal(3)
+                expect(items.length).to.equal(0)
+                done()
+            });
+        })
+    })
+    describe('CheckUpdateOrderStoreId', function () {
+        it('should attempt to update the order store ID', function (done) {
+            var new_store_id = 21
+            var order_type_id = 1
+            var order = new Order()
 
-    describe('CheckUpdateOrderType', function () {
+            order.initOrder(order_type_id, new_store_id, function (err, response) {
+                expect(err).to.be.null
+
+                order.updateOrderStoreId(response.token, response.order_id, new_store_id, function (err, response) {
+                    expect(err).to.be.null
+                    expect(response).not.to.be.null
+                    expect(response.store_id).to.equal(new_store_id)
+                    done()
+                })
+            })
+        })
+    })
+    describe('CheckGetOrder', function () {
+        it('should attempt to get our order', function (done) {
+            var new_store_id = 21
+            var order_type_id = 1
+            var order = new Order()
+
+            order.initOrder(order_type_id, new_store_id, function (err, response) {
+                expect(err).to.be.null
+
+                order.updateOrderStoreId(response.token, response.order_id, new_store_id, function (err, response) {
+                    expect(err).to.be.null
+
+                    order.getOrder(response.token, function (err, response) {
+                        expect(err).to.be.null
+                        expect(response).not.to.be.null
+                        expect(response.store_id).to.equal(new_store_id)
+                        done()
+                    })
+                })
+            })
+        })
+    })
+    describe('CheckUpdateOrderCollectionType', function () {
         it('should attempt to update pickup to delivery', function (done) {
             var store_id = 1
             var order_type_id = 1

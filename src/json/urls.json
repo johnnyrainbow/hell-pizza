@@ -5,7 +5,7 @@
     },
     "stores": {
         "region": "/regions/region-info.json?_=1550128476981",
-        "serviceable_stores":"/locations/${LOCATION_HASH}/serviceable-stores?limit=4"
+        "serviceable_stores": "/locations/${LOCATION_HASH}/serviceable-stores?limit=4"
     },
     "user": {
         "email_check": "/auth/account-exists?email=",
@@ -15,6 +15,7 @@
     },
     "order": {
         "init_order": "/orders",
+        "get_order": "/orders/${ORDER_TOKEN}",
         "add_item": "/orders/${ORDER_TOKEN}/items",
         "remove_item": "/orders/${ORDER_TOKEN}/items/${ORDER_ITEM_ID}",
         "update_order": "/orders/${ORDER_TOKEN}?order_id=${ORDER_ID}",
