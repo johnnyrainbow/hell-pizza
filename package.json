@@ -1,6 +1,6 @@
 {
   "name": "hell-pizza-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "NodeJS API Wrapper for Hell Pizza NZ",
   "main": "server.js",
   "scripts": {
@@ -32,5 +32,8 @@
     "geolib": "^2.0.24",
     "mocha": "^5.2.0",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.5.5"
   }
 }
