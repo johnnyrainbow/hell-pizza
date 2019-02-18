@@ -77,26 +77,4 @@ describe('User', function () {
             })
         })
     })
-
-
-    describe('checkSetAddress', function () {
-        it('should check if we can set order address from formatted address', function (done) {
-            var valid_email = 'npmtester@gmail.com'
-            var valid_password = "npmtester"
-            var user = new User()
-            user.login(valid_email, valid_password, function (err, response) {
-                expect(err).to.be.null
-                user.findAddress("86A constable street", function (err, response) {
-                    expect(err).to.be.null
-                    var address_response = response[0]
-                    user.setAddress(address_response, function (err, response) {
-                        expect(err).to.be.null
-                        expect(response.length).greaterThan(0)
-                        done()
-                    })
-                })
-            })
-        })
-    })
-
 })

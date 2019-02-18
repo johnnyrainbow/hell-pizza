@@ -2,9 +2,7 @@ var url = require('./json/urls.json')
 var httpJson = require('./request/request')
 
 class Menu {
-    constructor(menu) {
-        this.menu = menu || {}
-        this.id = this.menu.id || 1
+    constructor() {
         //the hell pizza api does not categorize their foods on the API, 
         //therefore we will define categories by ranges.
         this.pizza_id_range = { min: 4, max: 31 }
@@ -38,7 +36,7 @@ class Menu {
     }
 
     rangeRequest(range, callback) {
-        
+
         httpJson.get(url.menu.full_menu, function (err, response) {
             if (err) return callback(err)
 

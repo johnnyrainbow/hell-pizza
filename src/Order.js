@@ -2,54 +2,38 @@ var url = require('./json/urls.json')
 var status = require('./json/status_codes.json')
 var httpJson = require('./request/request')
 var codes = require('./json/codes.json')
-var util = require('./util/order_util')
+var util = require('./util/util')
 
 class Order {
-    constructor(store_id, menu, user) {
-        this.setStoreId(store_id)
-        this.setMenu(menu)
-        this.setUser(user)
-        this.items = null
-        this.order_type_id = codes.order_type.PICKUP
-        this.price = {}
+    constructor() {
+        this.menu_id = 1
     }
-    setMenu(menu) {
-        this.menu = menu
-    }
-    setStoreId(id) {
-        this.store_id = id
-    }
-    setUser(user) {
-        this.user = user
-    }
-   
 
-    initOrder(callback) {
-        var self = this
+    initOrder(order_type_id, store_id, callback) {
         var data = {
-            menu_id: this.menu.id,
-            order_type_id: this.order_type_id,
-            store_id: this.store_id,
+            menu_id: this.menu_id,
+            order_type_id: order_type_id,
+            store_id: store_id,
             voucher_code: null
         }
         httpJson.post(url.order.init_order, data, function (err, response) {
             if (err) return callback(err)
             var result = response.payload
-            self.token = result.token
-            self.order_id = result.order_id
-            self.time_promised = result.time_promised //soonest the order can be delivered/picked up UTC
-            return callback(null, status.success.init_order)
+
+            return callback(null, result)
         })
     }
-
-    addItemToOrder(item_id, item_size_id, item_quantity, modifiers, notes, callback) {
+    getOrder(order_token, callback) {
+        //retrieve our current order from hell api
+    }
+    addItemToOrder(token, item_id, item_size_id, item_quantity, modifiers, notes, callback) {
         if (!item_id || !item_size_id || !item_quantity)
             return callback(status.error.missing_item_params)
 
-        if (!this.token)
+        if (!token)
             return callback(status.error.missing_token)
 
-        var formatted_url = util.formatOrderURL(this, url.order.add_item)
+        var formatted_url = util.formatOrderURL(url.order.add_item, { token: token })
         var data = {
             item_id: item_id,
             item_size_id: item_size_id,
@@ -57,93 +41,96 @@ class Order {
             modifiers: modifiers,
             notes: notes,
         }
-        var self = this
+
         httpJson.post(formatted_url, data, function (err, response) {
             if (err) return callback(err)
             var result = response.payload
 
-            util.setUpdateItems(self, result)
-
-            return callback(null, status.success.added_item)
+            return callback(null, result)
         })
     }
 
-    removeItemFromOrder(order_item_id, callback) {
-        if (!this.token)
+    removeItemFromOrder(token, order_item_id, callback) {
+        if (!token)
             return callback(status.error.missing_token)
-
-        if (!this.items || this.items.length === 0)
-            return callback(status.error.no_items_to_remove)
 
         if (!order_item_id)
             return callback(status.error.no_provided_id)
 
-        var formatted_url = util.formatOrderURL(this, url.order.remove_item, { order_item_id: order_item_id })
+        var formatted_url = util.formatOrderURL(url.order.remove_item, { token: token, order_item_id: order_item_id })
 
-        var self = this
         httpJson.delete(formatted_url, function (err, response) {
             if (err) return callback(err)
             var result = response.payload
 
-            util.setUpdateItems(self, result)
-
-            return callback(null, status.success.removed_item)
+            return callback(null, result)
         })
     }
 
-    updateOrderType(type, callback) {
-        if (!type) return callback(status.error.no_provided_type)
+    updateOrderCollectionTime(token, order_id, new_time, callback) {
+        if (!new_time) return callback(status.error.no_provided_time)
 
-        if (!this.token || !this.order_id)
+        if (!token || !order_id)
             return callback(status.error.missing_token)
 
-        var formatted_url = util.formatOrderURL(this, url.order.update_prefs)
+        var data = util.configureUpdateData(this, { time_scheduled: new_time })
+        this.updateOrder(token, order_id, data, callback)
+    }
+
+    updateOrderCollectionType(token, order_id, type, callback) {
+        if (!type) return callback(status.error.no_provided_type)
+
+        if (!token || !order_id)
+            return callback(status.error.missing_token)
 
         var data = util.configureUpdateData(this, { order_type_id: type })
-        var self = this
+        this.updateOrder(token, order_id, data, callback)
+    }
+
+    updateOrder(token, order_id, data, callback) {
+        var formatted_url = util.formatOrderURL(url.order.update_order, { token: token, order_id: order_id })
+
         httpJson.post(formatted_url, data, function (err, response) {
             if (err) return callback(err)
             var result = response.payload
 
-            util.setUpdateItems(self, result)
-            self.order_type_id = result.order_type_id
-            return callback(null, status.success.updated_order_type)
+            return callback(null, result)
         })
     }
 
-    applyVoucherCode(voucher_code, callback) {
+    applyVoucherCode(token, voucher_code, callback) {
+        if (!token)
+            return callback(status.error.missing_token)
+
         if (!voucher_code)
             return callback(status.error.no_provided_voucher)
 
-        var formatted_url = util.formatOrderURL(this, url.order.voucher_code)
+        var formatted_url = util.formatOrderURL(url.order.voucher_code, { token: token })
         var data = {
-            order_token: this.token,
+            order_token: token,
             voucher_code: voucher_code
         }
-        var self = this
         httpJson.post(formatted_url, data, function (err, response) {
             if (err) return callback(err)
 
             var result = response.payload
-            util.setUpdateItems(self, result)
-            return callback(null, response.voucher)
+            return callback(null, result)
         })
     }
 
-    clearVoucherCode(callback) {
-        var formatted_url = util.formatOrderURL(this, url.order.voucher_code)
+    clearVoucherCode(token, callback) {
+        var formatted_url = util.formatOrderURL(url.order.voucher_code, { token: token })
 
-        var self = this
         httpJson.delete(formatted_url, function (err, response) {
             if (err) return callback(err)
 
             var result = response.payload
-            util.setUpdateItems(self, result)
-            return callback(null, response.voucher)
+            return callback(null, result)
         })
     }
 
-    placeOrder(payment_type, callback) { 
+    //rework this
+    placeOrder(payment_type, callback) {
         if (!this.user)
             return callback(status.error.no_provided_user)
 

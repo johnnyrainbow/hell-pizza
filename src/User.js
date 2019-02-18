@@ -1,13 +1,11 @@
 var url = require('./json/urls.json')
 var status = require('./json/status_codes.json')
 var httpJson = require('./request/request')
-var util = require('./util/order_util')
+var util = require('./util/util')
 var codes = require('./json/codes.json')
 
 class User {
-    constructor() {
-        this.customer_id = null
-    }
+    constructor() { }
 
     checkAccountExists(email, callback) {
         if (!email)
@@ -28,7 +26,7 @@ class User {
         httpJson.post(url.user.login, { uid: email, token: password }, function (err, response) {
             if (err) return callback(err)
             var result = response.payload
-            self.customer_id = result.customer_id
+
             return callback(null, result)
         })
     }
@@ -48,7 +46,7 @@ class User {
         if (!address_query || address_query == '')
             return callback(status.error.no_provided_address)
 
-        var formatted_url = util.formatOrderURL(this, url.user.find_address, { address_query: address_query })
+        var formatted_url = util.formatUserURL(url.user.find_address, { address_query: address_query })
 
         httpJson.get(formatted_url, function (err, response) {
             if (err) return callback(err)
@@ -57,31 +55,31 @@ class User {
         })
     }
 
-    setAddress(address_response, callback) {
-        if (!address_response)
-            return callback(status.error.no_provided_address)
+    // setAddress(address_response, customer_id, callback) {
+    //     if (!address_response)
+    //         return callback(status.error.no_provided_address)
 
-        if (!this.customer_id)
-            return callback(status.error.log_in_required)
+    //     if (!customer_id)
+    //         return callback(status.error.log_in_required)
 
-        this.address = address_response
+    //     this.address = address_response
 
-        this.location_hash = address_response.location_hash
-        var formatted_url = util.formatOrderURL(this, url.order.set_address, { customer_id: this.customer_id })
-        var data = {
-            location_id: this.location_hash,
-            customer_address_type_id: codes.address_type.RESIDENTIAL,
-            notes: "",
-            type_data: {},
-            customer_id: this.customer_id,
-        }
+    //     this.location_hash = address_response.location_hash
+    //     var formatted_url = util.formatOrderURL(this, url.order.set_address, { customer_id: customer_id })
+    //     var data = {
+    //         location_id: this.location_hash,
+    //         customer_address_type_id: codes.address_type.RESIDENTIAL,
+    //         notes: "",
+    //         type_data: {},
+    //         customer_id: this.customer_id,
+    //     }
 
-        httpJson.post(formatted_url, data, function (err, response) {
-            if (err) return callback(err)
-            //get order times
-            return callback(null, status.success.address_update)
-        })
-    }
+    //     httpJson.post(formatted_url, data, function (err, response) {
+    //         if (err) return callback(err)
+    //         //get order times
+    //         return callback(null, status.success.address_update)
+    //     })
+    // }
 
 
 

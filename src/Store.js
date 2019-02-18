@@ -3,7 +3,7 @@ var region = require('./json/region.json')
 var status = require('./json/status_codes.json')
 var httpJson = require('./request/request')
 var geolib = require('geolib')
-var util = require('./util/order_util')
+var util = require('./util/util')
 
 class Store {
     constructor() {
@@ -38,14 +38,14 @@ class Store {
     }
 
     getServiceableStores(location_hash, callback) {
-        if (!location_hash) return callback("some error")
-        var formatted_url = util.formatOrderURL(this, url.stores.serviceable_stores, { location_hash: location_hash })
-        
+        if (!location_hash) return callback(codes.error.no_provided_hash)
+
+        var formatted_url = util.formatStoreURL(url.stores.serviceable_stores, { location_hash: location_hash })
+
         httpJson.get(formatted_url, function (err, response) {
             if (err) return callback(err)
 
             var result = response.payload
-
             return callback(null, result)
         })
     }

@@ -17,10 +17,9 @@
         "init_order": "/orders",
         "add_item": "/orders/${ORDER_TOKEN}/items",
         "remove_item": "/orders/${ORDER_TOKEN}/items/${ORDER_ITEM_ID}",
-        "update_prefs": "/orders/${ORDER_TOKEN}?order_id=${ORDER_ID}",
+        "update_order": "/orders/${ORDER_TOKEN}?order_id=${ORDER_ID}",
         "voucher_code": "/orders/${ORDER_TOKEN}/voucher-code",
         "place": "/orders/${ORDER_TOKEN}/place",
         "set_address": "/customers/${CUSTOMER_ID}/addresses"
-
     }
 }

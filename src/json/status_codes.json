@@ -15,6 +15,8 @@
         "no_provided_voucher": "You must provide a voucher code.",
         "no_provided_store_id": "You must provide a store id.",
         "no_provided_address": "You must provide an address",
+        "no_provided_time": "You must provide a time to set your order to.",
+        "no_provided_hash":"You must provide a location hash.",
 
         "missing_item_params": "Missing item parameters.",
         "missing_token": "You are missing your order token or order_id. Ensure that you have instantiated your order.",
