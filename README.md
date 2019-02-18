@@ -2,15 +2,16 @@
 
 A node.js wrapper for the Hell's Pizza API.
 
-<h4>Installation</h4>
-```
+## Installation
+
+```bash
 npm install --save hell-pizza-api
 ```
 
-<h4>Basic usage examples</h4>
+## Basic usage examples
 
-<h4>Menu</h4>
-```
+## Menu
+```javascript
 var hellPizza = require('hell-pizza-api')
 
 getPizzas(req, res) {
@@ -20,31 +21,32 @@ getPizzas(req, res) {
          //response is an array, contains items in the pizza menu
       })
     }
-
 ```
 
-<h4>User</h4>
-```
+## User
+
+```javascript
 login(req, res) {
     hellPizza.User.login(req.body.email, req.body.password, function (err, response) {
-        if (err) return res.status(500).send({ error: err })
+        if (err) //handle err
 
-        //response is auth token and other login/auth info
+        //response contains auth token and other login/auth info
     })
   }
 ```
 
-<h4>STORE</h4>
-```
+## STORE
+
+```javascript
 findNearestStores(req, res) {
     hellPizza.User.findAddress(req.body.address, function (err, response) {
-        if (err) return res.status(500).send({ error: err })
+        if (err) //handle err
         
         //response contains valid addresses that match query
-        var address_response = response[0] //take the first location in array 
+        var address_response = response[0] 
 
         hellPizza.Store.getServiceableStores(address_response.location_hash, function (err, response) {
-            if (err) return res.status(500).send({ error: err })
+            if (err) //handler err
 
            //response contains nearby available stores. Max limit 4.
         })
@@ -52,26 +54,26 @@ findNearestStores(req, res) {
 }
 ```
 
-<h4>ORDER</h4>
-```
+## ORDER
+
+```javascript
 initOrder(req, res) {
       hellPizza.Order.initOrder(req.body.order_type_id, req.body.store_id, function (err, response) {
-          if (err) return res.status(500).send({ error: err })
+          if (err) //handle err
 
           //response contains order_id and order token.
       })
   }
 ```
 
-```
+```javascript
 addItemToOrder(req, res) {
       //pass through your created order token, the id of the item you wish to add, the applicable size of the item, quantity, and any modifiers or notes.
 
       hellPizza.Order.addItem(order_token, item_id, item_size_id, item_quantity, modifiers, notes, function (err, response) {
-          if (err) return res.status(500).send({ error: err })
+          if (err) //handle err
 
         //response contains your updated order
       })
-  },
-
+  }
 ```
