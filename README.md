@@ -31,26 +31,28 @@ var store_id = 1
 ### Methods
 `callback` takes `err` and `response` arguments.
 
+Response gives menu items and store_info on the menu specified by store_id. 
+
 #### `Menu.getMenuItems(store_id, callback)`
-Gets all items, as well as store_info on the menu specified by store_id. 
+Gets all items for a store.
 
 #### `Menu.getPizzas(store_id, callback)`
-Gets all pizzas as well as store_info on the menu specified by store_id.   
+Gets all pizzas for a store.
 
 #### `Menu.getSides(store_id, callback)`
-Gets all sides as well as store_info on the menu specified by store_id. 
+Gets all sides for a store.
 
 #### `Menu.getSoftDrinks(store_id, callback)`
-Gets all soft drinks as well as store_info on the menu specified by store_id. 
+Gets all soft drinks for a store.
 
 #### `Menu.getDesserts(store_id, callback)`
-Gets all desserts as well as store_info on the menu specified by store_id. 
+Gets all desserts for a store.
 
 #### `Menu.getSalads(store_id, callback)`
-Gets all.. ick.. salads.. as well as store_info on the menu specified by store_id. 
+Gets all.. ick.. salads.. for a store.
 
 #### `Menu.getAlcoholicDrinks(store_id callback)`
-Gets all alcoholic drinks as well as store_info on the menu specified by store_id. 
+Gets all alcoholic drinks for a store.
 
 
 
