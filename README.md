@@ -1,4 +1,4 @@
-# hell-pizza-api-wrapper
+# hell-pizza
 
 A node.js wrapper for the New Zealand based Hell Pizza API. 
 
