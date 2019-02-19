@@ -62,8 +62,6 @@ class Order {
         if (!item_id || !item_size_id || !item_quantity)
             return callback(status.error.missing_item_params)
 
-
-
         var formatted_url = util.formatOrderURL(url.order.add_item, { token: token })
         var data = {
             item_id: item_id,

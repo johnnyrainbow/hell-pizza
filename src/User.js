@@ -2,7 +2,6 @@ var url = require('./json/urls.json')
 var status = require('./json/status_codes.json')
 var httpJson = require('./request/request')
 var util = require('./util/util')
-var codes = require('./json/codes.json')
 
 class User {
 
