@@ -19,8 +19,9 @@ Run `npm test`
 ### Example
 ```javascript
 var hellPizza = require('hell-pizza-api')
+var store_id = 1
 
-    hellPizza.Menu.getPizzas(function (err, response) {
+    hellPizza.Menu.getPizzas(store_id, function (err, response) {
         if (err) //handle err
 
          //response is an array, contains items in the pizza menu
@@ -30,26 +31,26 @@ var hellPizza = require('hell-pizza-api')
 ### Methods
 `callback` takes `err` and `response` arguments.
 
-#### `Menu.getMenuItems(callback)`
-Gets all items on the menu. 
+#### `Menu.getMenuItems(store_id, callback)`
+Gets all items, as well as store_info on the menu specified by store_id. 
 
-#### `Menu.getPizzas(callback)`
-Gets all pizzas on the menu. 
+#### `Menu.getPizzas(store_id, callback)`
+Gets all pizzas as well as store_info on the menu specified by store_id.   
 
-#### `Menu.getSides(callback)`
-Gets all sides on the menu. 
+#### `Menu.getSides(store_id, callback)`
+Gets all sides as well as store_info on the menu specified by store_id. 
 
-#### `Menu.getSoftDrinks(callback)`
-Gets all soft drinks on the menu. 
+#### `Menu.getSoftDrinks(store_id, callback)`
+Gets all soft drinks as well as store_info on the menu specified by store_id. 
 
-#### `Menu.getDesserts(callback)`
-Gets all desserts on the menu. 
+#### `Menu.getDesserts(store_id, callback)`
+Gets all desserts as well as store_info on the menu specified by store_id. 
 
-#### `Menu.getSalads(callback)`
-Gets all.. ick.. salads.. on the menu. 
+#### `Menu.getSalads(store_id, callback)`
+Gets all.. ick.. salads.. as well as store_info on the menu specified by store_id. 
 
-#### `Menu.getAlcoholicDrinks(callback)`
-Gets all alcoholic drinks on the menu. 
+#### `Menu.getAlcoholicDrinks(store_id callback)`
+Gets all alcoholic drinks as well as store_info on the menu specified by store_id. 
 
 
 
