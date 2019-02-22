@@ -206,6 +206,9 @@ Applies provided voucher_code to an order. Takes the order token, voucher_code s
 #### `Order.clearVoucherCode(token, callback)`
 Clears the voucher_code of an order. Takes the order token as a parameter.
 
+#### `Order.placeOrder(token, store_payment_type_id, callback)`
+Places your order. Takes the order token, and store_payment_id as parameters. Currently only supports non virtual card orders (Cash on delivery or pay on pickup)
+
 
 
 
