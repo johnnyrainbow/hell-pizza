@@ -17,6 +17,9 @@ module.exports = {
         return data
     },
 
+    generateBase64Header(auth_token) {
+        return "Basic " + Buffer.from(":" + auth_token).toString('base64')
+    }
 
     /**
      * Format the URL for store based requests.

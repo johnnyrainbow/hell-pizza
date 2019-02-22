@@ -1,8 +1,7 @@
 var http = require('request')
 var requestFormatter = require('./request_formatter')
-var auth = require('../json/auth.json')
-
-module.exports.post = function (url, req, callback) {
+var util = require('../util/util')
+module.exports.post = function (url, req, auth_token, callback) {
 
     if (typeof req != 'string')
         req = JSON.stringify(req)
@@ -11,7 +10,7 @@ module.exports.post = function (url, req, callback) {
         uri: requestFormatter.formatRequest(url),
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': auth.header
+            'Authorization': util.generateBase64Header(auth_token)
         },
         body: req
     };

@@ -5,24 +5,23 @@ var util = require('./util/util')
 
 class Order {
 
-    constructor() {
-        this.menu_id = 1
-    }
+    constructor() { }
 
     /**
      * Instantiates an order.
+     * @param {String} auth_token - The auth token. null if logged out.
      * @param {number} order_type_id - The type of collection. Pickup = 1  Delivery = 2.
      * @param {number} store_id - The store id.
      * @param {Function} callback - The callback that handles the response.
      */
-    initOrder(order_type_id, store_id, callback) {
+    initOrder(auth_token, order_type_id, store_id, callback) {
         var data = {
-            menu_id: this.menu_id,
+            menu_id: 1, //default main menu
             order_type_id: order_type_id,
             store_id: store_id,
             voucher_code: null
         }
-        httpJson.post(url.order.init_order, data, function (err, response) {
+        httpJson.post(url.order.init_order, data, auth_token, function (err, response) {
             if (err) return callback(err)
             var result = response.payload
 
@@ -47,7 +46,8 @@ class Order {
 
     /**
      * Adds an item to existing order.
-     * @param {string} token - The order token.
+     * @param {string} auth_token - The auth token. Null if logged out
+     * @param {string} order_token - The order token.
      * @param {number} item_id - The item id.
      * @param {number} item_size_id - Item sizes: 2 = small 3 = large
      * @param {number} item_quantity - The quantity of the item you wish to add.
@@ -55,14 +55,14 @@ class Order {
      * @param {string} notes - The notes for the item you are adding.
      * @param {Function} callback - The callback that handles the response.
      */
-    addItem(token, item_id, item_size_id, item_quantity, modifiers, notes, callback) {
-        if (!token)
+    addItem(auth_token, order_token, item_id, item_size_id, item_quantity, modifiers, notes, callback) {
+        if (!order_token)
             return callback(status.error.missing_token)
 
         if (!item_id || !item_size_id || !item_quantity)
             return callback(status.error.missing_item_params)
 
-        var formatted_url = util.formatOrderURL(url.order.add_item, { token: token })
+        var formatted_url = util.formatOrderURL(url.order.add_item, { token: order_token })
         var data = {
             item_id: item_id,
             item_size_id: item_size_id,
@@ -71,7 +71,7 @@ class Order {
             notes: notes,
         }
 
-        httpJson.post(formatted_url, data, function (err, response) {
+        httpJson.post(formatted_url, data, auth_token, function (err, response) {
             if (err) return callback(err)
             var result = response.payload
 
@@ -154,15 +154,16 @@ class Order {
 
     /**
       * Updates an order.
-      * @param {string} token - The order token.
+      * @param {string} auth_token - The auth token. Null if logged out.
+      * @param {string} order_token - The order token.
       * @param {number} order_id - The id of the order you wish to update.
       * @param {Object} data - The updatable data parameters.
       * @param {Function} callback - The callback that handles the response.
       */
-    update(token, order_id, data, callback) {
-        var formatted_url = util.formatOrderURL(url.order.update_order, { token: token, order_id: order_id })
+    update(auth_token, order_token, order_id, data, callback) {
+        var formatted_url = util.formatOrderURL(url.order.update_order, { token: order_token, order_id: order_id })
 
-        httpJson.post(formatted_url, data, function (err, response) {
+        httpJson.post(formatted_url, data, auth_token, function (err, response) {
             if (err) return callback(err)
             var result = response.payload
 
@@ -172,23 +173,24 @@ class Order {
 
     /**
      * Applies a voucher code to an order.
-     * @param {string} token - The order token.
+     * @param {string} auth_token - The auth token. Null if logged out.
+     * @param {string} order_token - The order token.
      * @param {string} voucher_code - The voucher code you wish to apply.
      * @param {Function} callback - The callback that handles the response.
      */
-    applyVoucherCode(token, voucher_code, callback) {
-        if (!token)
+    applyVoucherCode(auth_token, order_token, voucher_code, callback) {
+        if (!order_token)
             return callback(status.error.missing_token)
 
         if (!voucher_code)
             return callback(status.error.no_provided_voucher)
 
-        var formatted_url = util.formatOrderURL(url.order.voucher_code, { token: token })
+        var formatted_url = util.formatOrderURL(url.order.voucher_code, { token: order_token })
         var data = {
-            order_token: token,
+            order_token: order_token,
             voucher_code: voucher_code
         }
-        httpJson.post(formatted_url, data, function (err, response) {
+        httpJson.post(formatted_url, data, auth_token, function (err, response) {
             if (err) return callback(err)
 
             var result = response.payload
@@ -214,23 +216,24 @@ class Order {
 
     /**
     * Places an order. 
-    * @param {string} token - The order token.
+    * @param {string} order_token - The auth token. Null if logged out.
+    * @param {string} order_token - The order token.
     * @param {string} store_payment_type_id - The chosen payment_type_id unique to the store you have chosen. NOTE currently does not support pay with card. Only pay with cash delivery and pay on pickup.
     * @param {Function} callback - The callback that handles the response.
     */
-    placeOrder(token, store_payment_type_id, callback) {
+    placeOrder(auth_token, order_token, store_payment_type_id, callback) {
         if (!store_payment_type_id)
             return callback(status.error.no_provided_store_payment_id)
 
-        if (!token)
+        if (!order_token)
             return callback(status.error.missing_token)
 
-        var formatted_url = util.formatOrderURL(url.order.place, { token: token })
+        var formatted_url = util.formatOrderURL(url.order.place, { token: order_token })
         var data = {
-            order_token: token,
+            order_token: order_token,
             store_payment_type_id: no_provided_store_payment_id
         }
-        httpJson.post(formatted_url, data, function (err, response) {
+        httpJson.post(formatted_url, data, auth_token, function (err, response) {
             if (err) return callback(err)
 
             return callback(response)
