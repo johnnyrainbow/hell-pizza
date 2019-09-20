@@ -2,6 +2,8 @@
 
 A node.js wrapper for the New Zealand based Hell Pizza API. 
 
+Note: I am not in anyway affiliated with hell pizza, this was created just for fun.
+
 ## Installation
 
 ```bash
@@ -136,7 +138,7 @@ Access region list through `Store.region_list`
 #### `Store.getServiceableStores(location_hash, callback)`
 Gets all stores in service from provided location_hash.
 
-#### `Store.getNearestStore(lat, lng callback)`
+#### `Store.getNearestStore(lat, lng, callback)`
 Gets nearest store from provided lat lng location.
 
 
