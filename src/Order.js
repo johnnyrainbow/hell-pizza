@@ -115,7 +115,7 @@ class Order {
             return callback(status.error.missing_token)
 
         var data = util.configureUpdateData({ store_id: store_id })
-        this.update(token, order_id, data, callback)
+        this.update(null, token, order_id, data, callback)
     }
 
     /**
@@ -132,7 +132,7 @@ class Order {
             return callback(status.error.missing_token)
 
         var data = util.configureUpdateData({ time_scheduled: new_time })
-        this.update(token, order_id, data, callback)
+        this.update(null, token, order_id, data, callback)
     }
 
     /**
@@ -149,7 +149,7 @@ class Order {
             return callback(status.error.missing_token)
 
         var data = util.configureUpdateData({ order_type_id: type })
-        this.update(token, order_id, data, callback)
+        this.update(null, token, order_id, data, callback)
     }
 
     /**
