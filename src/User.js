@@ -30,11 +30,11 @@ class User {
     * @param {string} password - The password associated with your account.
     * @param {Function} callback - The callback that handles the response
     */
-    login(email, password, callback) {
+    login(email, password, auth_token, callback) {
         if (!email || !password)
             return callback(status.error.no_provided_user_pass)
         var self = this
-        httpJson.post(url.user.login, { uid: email, token: password }, function (err, response) {
+        httpJson.post(url.user.login, { uid: email, token: password }, auth_token, function (err, response) {
             if (err) return callback(err)
             var result = response.payload
 
@@ -50,11 +50,11 @@ class User {
     * @param {string} phone_number - The phone number you wish to be associated with your account.
     * @param {Function} callback - The callback that handles the response.
     */
-    register(email, first_name, password, phone_number, callback) {
+    register(email, first_name, password, phone_number, auth_token, callback) {
         if (!email || !first_name || !password || !phone_number)
             return callback(status.error.no_provided_credentials)
 
-        httpJson.post(url.user.register, { email: email, first_name: first_name, password: password, phone_number: phone_number }, function (err, response) {
+        httpJson.post(url.user.register, { email: email, first_name: first_name, password: password, phone_number: phone_number }, auth_token, function (err, response) {
             if (err) return callback(err)
             var result = response.payload
             return callback(null, result)

@@ -31,7 +31,7 @@ describe('User', function () {
             var valid_email = 'npmtester@gmail.com'
             var valid_password = "npmtester"
             var user = new User()
-            user.login(valid_email, valid_password, function (err, response) {
+            user.login(valid_email, valid_password, null, function (err, response) {
                 expect(err).to.be.null
                 expect(response.access_token).to.exist
                 done()
@@ -43,7 +43,7 @@ describe('User', function () {
             var valid_email = 'npmtester@gmail.com'
             var valid_password = "badpass"
             var user = new User()
-            user.login(valid_email, valid_password, function (err, response) {
+            user.login(valid_email, valid_password, null, function (err, response) {
                 expect(err).not.to.be.null
                 done()
             })
@@ -58,7 +58,7 @@ describe('User', function () {
             var valid_name = 'Jim'
             var user = new User()
 
-            user.register(valid_email, valid_name, valid_password, valid_phone, function (err, response) {
+            user.register(valid_email, valid_name, valid_password, valid_phone, null, function (err, response) {
                 expect(err).to.be.null
                 expect(response.customer_id).to.exist
                 done()

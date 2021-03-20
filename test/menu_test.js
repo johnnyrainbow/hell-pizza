@@ -1,7 +1,7 @@
 var chai = require('chai');
 var expect = chai.expect;
 var Menu = require('../src/Menu')
-const total_menu_size = 206 //amount of items in total menu
+const total_menu_size = 243 //amount of items in total menu
 
 describe('Menu', function () {
     describe('CheckMenuUpdate', function () {
