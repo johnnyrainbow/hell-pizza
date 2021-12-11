@@ -34,6 +34,7 @@ describe('User', function () {
             user.login(valid_email, valid_password, null, function (err, response) {
                 expect(err).to.be.null
                 expect(response.access_token).to.exist
+              
                 done()
             })
         })

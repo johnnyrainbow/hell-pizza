@@ -216,6 +216,30 @@ class Order {
 	}
 
 	/**
+	 * Checks the validity of a voucher code
+	 * @param {string} auth_token - The auth token. Null if logged out.
+	 * @param {string} voucher_code - The voucher code you wish to apply.
+	 * @param {Function} callback - The callback that handles the response.
+	 */
+	checkVoucherCode(auth_token, voucher_code, callback) {
+		if (!voucher_code) return callback(status.error.no_provided_voucher);
+
+		var formatted_url = util.formatOrderURL(url.user.check_voucher_code, {
+			token: null,
+		});
+		var data = {
+			code: voucher_code,
+		};
+
+		httpJson.post(formatted_url, data, auth_token, function (err, response) {
+			if (err) return callback(err);
+
+			var result = response.payload;
+			return callback(null, result);
+		});
+	}
+
+	/**
 	 * Clears the voucher code for an order.
 	 * @param {string} token - The order token.
 	 * @param {Function} callback - The callback that handles the response.
