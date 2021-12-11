@@ -1,5 +1,5 @@
 {
-    "BASE_URL": "https://online.hellpizza.com/api/1.0",
+    "BASE_URL": "https://api.hellpizza.com/2.0",
     "menu": {
         "full_menu": "/stores/${STORE_ID}/menu"
     },
