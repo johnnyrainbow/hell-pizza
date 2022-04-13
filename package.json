@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/johnnyrainbow/hell-pizza-node-api#readme",
   "dependencies": {
-    "async": "^2.6.2",
+    "async": "^3.2.2",
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "request": "^2.88.0"
